@@ -14,6 +14,8 @@
 
   <xacro:property name="M_PI" value="3.14159"/>
 
+  <xacro:include filename="$(find omnibot_description)/urdf/sensors.urdf.xacro"/>
+
   <xacro:macro name="omnibot_wheel" params="prefix *joint_pose">
     <link name="${prefix}_wheel_link">
       <visual>
@@ -35,7 +37,7 @@
       </collision>
       <inertial>
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        <mass value="0.050"/>
+        <mass value="0.060"/>
         <inertia ixx="1e-6" ixy="0.0" ixz="0.0" iyy="1e-6" iyz="0.0" izz="1e-6"/>
       </inertial>
     </link>
@@ -52,8 +54,8 @@
   <link name="base_link">
     <inertial>
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-      <mass value="1.0"/>
-      <inertia ixx="1e-6" ixy="0.0" ixz="0.0" iyy="1e-6" iyz="0.0" izz="1e-6"/>
+      <mass value="3.0"/>
+      <inertia ixx="1e-4" ixy="0.0" ixz="0.0" iyy="1e-4" iyz="0.0" izz="1e-4"/>
     </inertial>
     <visual name="">
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
@@ -93,5 +95,17 @@
   <xacro:omnibot_wheel prefix="back_right">
     <origin xyz="${-wheel_x_offset} ${wheel_y_offset} ${wheel_z_offset}" rpy="0.0 0.0 0.0"/>
   </xacro:omnibot_wheel>
+
+  <xacro:imu>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </xacro:imu>
+
+  <xacro:lidar>
+    <origin xyz="0.0 0.0 ${base_height/2 + 0.02}" rpy="0.0 0.0 0.0"/>
+  </xacro:lidar>
+
+  <xacro:camera>
+    <origin xyz="${base_length/2} 0.0 ${base_height/2}" rpy="0.0 0.0 0.0"/>
+  </xacro:camera>
 
 </robot>
