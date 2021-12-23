@@ -1,36 +1,36 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnibot">
 
-  <xacro:property name="base_length" value="0.30"/>
-  <xacro:property name="base_width" value="0.20"/>
-  <xacro:property name="base_height" value="0.10"/>
+  <xacro:property name="base_length" value="0.28"/>
+  <xacro:property name="base_width" value="0.18"/>
+  <xacro:property name="base_height" value="0.08"/>
 
-  <xacro:property name="wheel_length" value="0.030"/>
+  <xacro:property name="wheel_width" value="0.030"/>
   <xacro:property name="wheel_radius" value="0.032"/>
 
   <xacro:property name="wheel_x_offset" value="${base_length/4}"/>
-  <xacro:property name="wheel_y_offset" value="${base_widht/2 + 0.01}"/>
+  <xacro:property name="wheel_y_offset" value="${base_width/2 + wheel_width/2 + 0.005}"/>
   <xacro:property name="wheel_z_offset" value="${-base_height/2 + 0.02}"/>
 
-  <xacro:property name="PI" value="3.14159"/>
+  <xacro:property name="M_PI" value="3.14159"/>
 
   <xacro:macro name="omnibot_wheel" params="prefix *joint_pose">
     <link name="${prefix}_wheel_link">
       <visual>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.0" rpy="${M_PI/2} 0.0 0.0"/>
         <geometry>
           <!-- <mesh filename="package://omnibot_description/meshes/omni_wheel.dae"/> -->
-          <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
         </geometry>
         <material name="LightGrey">
           <color rgba="0.7 0.7 0.7 1.0"/>
         </material>
       </visual>
       <collision>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.0" rpy="${M_PI/2} 0.0 0.0"/>
         <geometry>
           <!-- <mesh filename="package://omnibot_description/meshes/omni_wheel.stl"/> -->
-          <cylinder radius="${wheel_radius}" length="${wheel_length}"/>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
         </geometry>
       </collision>
       <inertial>
@@ -78,7 +78,7 @@
   <joint name="base_joint" type="fixed">
     <parent link="base_link"/>
     <child link="base_footprint"/>
-    <origin xyz="0.0 0.0 ${-(wheel_radius+wheel_z_offset)}" rpy="0 0 0"/>
+    <origin xyz="0.0 0.0 ${-(wheel_radius-wheel_z_offset)}" rpy="0 0 0"/>
   </joint>
 
   <xacro:omnibot_wheel prefix="front_left">
