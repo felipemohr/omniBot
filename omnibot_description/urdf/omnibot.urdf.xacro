@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnibot">
 
-  <xacro:property name="base_length" value="0.28"/>
-  <xacro:property name="base_width" value="0.18"/>
-  <xacro:property name="base_height" value="0.08"/>
+  <xacro:property name="base_length" value="0.200"/>
+  <xacro:property name="base_width" value="0.140"/>
+  <xacro:property name="base_height" value="0.0764"/>
 
-  <xacro:property name="wheel_width" value="0.030"/>
-  <xacro:property name="wheel_radius" value="0.032"/>
+  <xacro:property name="wheel_width" value="0.036"/>
+  <xacro:property name="wheel_radius" value="0.039"/>
 
-  <xacro:property name="wheel_x_offset" value="${base_length/4}"/>
-  <xacro:property name="wheel_y_offset" value="${base_width/2 + wheel_width/2 + 0.005}"/>
-  <xacro:property name="wheel_z_offset" value="${-base_height/2 + 0.02}"/>
+  <xacro:property name="wheel_x_offset" value="0.06"/>
+  <xacro:property name="wheel_y_offset" value="${base_width/2 + wheel_width/2 + 0.0165}"/>
+  <xacro:property name="wheel_z_offset" value="${-base_height/2 + 0.0228}"/>
 
   <xacro:property name="M_PI" value="3.14159"/>
 
@@ -52,18 +52,15 @@
   <link name="base_link">
     <inertial>
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-      <mass value="1.0"/>
-      <inertia ixx="1e-6" ixy="0.0" ixz="0.0" iyy="1e-6" iyz="0.0" izz="1e-6"/>
+      <mass value="0.325"/>
+      <inertia ixx="0.00112318" ixy="-4.044e-6" ixz="-1.882e-6" iyy="0.002" iyz="9.405e-7" izz="0.003"/>
     </inertial>
-    <visual name="">
+    <visual>
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
       <geometry>
         <box size="${base_length} ${base_width} ${base_height}"/>
+        <!-- <mesh filename="package://omnibot_description/meshes/base_link.stl"/> -->
       </geometry>
-      <material name="">
-        <color rgba="1.0 0.0 0.0 1.0"/>
-        <!-- <texture filename=""/> -->
-      </material>
     </visual>
     <collision>
       <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
@@ -93,5 +90,17 @@
   <xacro:omnibot_wheel prefix="back_right">
     <origin xyz="${-wheel_x_offset} ${wheel_y_offset} ${wheel_z_offset}" rpy="0.0 0.0 0.0"/>
   </xacro:omnibot_wheel>
+
+  <!-- <xacro:imu>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </xacro:imu>
+
+  <xacro:lidar>
+    <origin xyz="0.0 0.0 ${base_height/2 + 0.02}" rpy="0.0 0.0 0.0"/>
+  </xacro:lidar> -->
+
+  <!-- <xacro:camera>
+    <origin xyz="${base_length/2} 0.0 ${base_height/2}" rpy="0.0 0.0 0.0"/>
+  </xacro:camera> -->
 
 </robot>
