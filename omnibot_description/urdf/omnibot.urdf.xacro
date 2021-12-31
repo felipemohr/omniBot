@@ -14,7 +14,7 @@
 
   <xacro:property name="M_PI" value="3.14159"/>
 
-  <!-- <xacro:include filename="$(find omnibot_description)/urdf/sensors.urdf.xacro"/> -->
+  <xacro:include filename="$(find omnibot_description)/urdf/sensors.urdf.xacro"/>
 
   <xacro:macro name="omnibot_wheel" params="prefix *joint_pose">
     <link name="${prefix}_wheel_link">
@@ -69,7 +69,7 @@
       <geometry>
         <box size="${base_length} ${base_width} ${base_height}"/>
       </geometry>
-    </collision>
+    </collision>  
   </link>
 
   <link name="base_footprint"/>
@@ -93,21 +93,22 @@
     <origin xyz="${-wheel_x_offset} ${wheel_y_offset} ${wheel_z_offset}" rpy="0.0 0.0 0.0"/>
   </xacro:omnibot_wheel>
 
-  <!-- <xacro:imu>
+  <xacro:imu>
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
   </xacro:imu>
 
   <xacro:lidar>
     <origin xyz="0.0 0.0 ${base_height/2 + 0.02}" rpy="0.0 0.0 0.0"/>
-  </xacro:lidar> -->
+  </xacro:lidar>
 
   <!-- <xacro:camera>
     <origin xyz="${base_length/2} 0.0 ${base_height/2}" rpy="0.0 0.0 0.0"/>
   </xacro:camera> -->
 
-  <!-- Joint states plugin -->
-  <!-- <gazebo>
-    <plugin filename="libignition-gazebo-joint-state-publisher-system.so" name="ignition::gazebo::systems::JointStatePublisher"/>
-  </gazebo> -->
+  <gazebo>
+    <!-- Joint states plugin -->
+    <plugin filename="libignition-gazebo-joint-state-publisher-system.so"
+            name="ignition::gazebo::systems::JointStatePublisher"/>
+  </gazebo>
 
 </robot>
