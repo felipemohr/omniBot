@@ -6,9 +6,9 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /LaserScan1
+        - /Camera1
       Splitter Ratio: 0.5
-    Tree Height: 758
+    Tree Height: 434
 Visualization Manager:
   Class: ""
   Displays:
@@ -63,6 +63,11 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
         base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        camera_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -134,10 +139,29 @@ Visualization Manager:
         Durability Policy: Volatile
         History Policy: Keep Last
         Reliability Policy: Reliable
-        Value: /omnibot/scan
+        Value: /lidar
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
+    - Class: rviz_default_plugins/Camera
+      Enabled: true
+      Image Rendering: background and overlay
+      Name: Camera
+      Overlay Alpha: 0.5
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /camera
+      Value: true
+      Visibility:
+        Grid: true
+        LaserScan: true
+        RobotModel: true
+        TF: true
+        Value: true
+      Zoom Factor: 1
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -180,12 +204,14 @@ Visualization Manager:
       Yaw: 5.1235785484313965
     Saved: ~
 Window Geometry:
+  Camera:
+    collapsed: false
   Displays:
     collapsed: false
   Height: 987
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd00000001000000000000015600000381fc0200000001fb000000100044006900730070006c006100790073010000003d00000381000000c900ffffff000003a40000038100000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000001000000000000015600000381fc0200000002fb000000100044006900730070006c006100790073010000003d0000023d000000c900fffffffb0000000c00430061006d00650072006101000002800000013e0000002800ffffff000003a40000038100000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Width: 1280
   X: 0
   Y: 0

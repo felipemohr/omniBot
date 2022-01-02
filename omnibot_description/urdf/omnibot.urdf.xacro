@@ -101,13 +101,12 @@
     <origin xyz="0.0 0.0 ${base_height/2 + 0.02}" rpy="0.0 0.0 0.0"/>
   </xacro:lidar>
 
-  <!-- <xacro:camera>
+  <xacro:camera>
     <origin xyz="${base_length/2} 0.0 ${base_height/2}" rpy="0.0 0.0 0.0"/>
-  </xacro:camera> -->
+  </xacro:camera>
 
   <gazebo>
-    <!-- Joint states plugin -->
-    <plugin filename="libignition-gazebo-joint-state-publisher-system.so"
+      <plugin filename="libignition-gazebo-joint-state-publisher-system.so"
             name="ignition::gazebo::systems::JointStatePublisher"/>
   </gazebo>
 
