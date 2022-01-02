@@ -11,7 +11,7 @@ def generate_launch_description():
 
   pkg_share = FindPackageShare(package='omnibot_description').find('omnibot_description')
   default_world_path = os.path.join(pkg_share, 'worlds/omni_world.sdf')
-  default_model_sdf_path = os.path.join(pkg_share, 'urdf/omnibot.sdf')
+  # default_model_sdf_path = os.path.join(pkg_share, 'urdf/omnibot.sdf')
   default_model_urdf_path = os.path.join(pkg_share, 'urdf/omnibot.urdf.xacro')
   default_rviz_config_path = os.path.join(pkg_share, 'rviz/config.rviz')
 
@@ -28,9 +28,9 @@ def generate_launch_description():
     package='ros_ign_gazebo',
     executable='create',
     arguments=['-name', 'omnibot',
-              #  '-topic', 'robot_description',
+               '-topic', 'robot_description',
                '-z', '0.25',
-               '-file', default_model_sdf_path
+              #  '-file', default_model_sdf_path
               ],
     output='screen'
   )
@@ -76,6 +76,13 @@ def generate_launch_description():
     output='screen'
   )
 
+  tf2_lidar_transform = Node(
+            package="tf2_ros",
+            executable="static_transform_publisher",
+            output="screen" ,
+            arguments=["0", "0", "0", "0", "0", "0", "lidar_link", "omnibot/base_link/sensor_ray"]
+  )
+
   return launch.LaunchDescription([
     launch.actions.DeclareLaunchArgument(name='world', default_value=default_world_path,
                                          description='Absolute path to world sdf file'),
@@ -90,5 +97,6 @@ def generate_launch_description():
     ign_ros_bridge,
     # joint_state_publisher,
     robot_state_publisher,
+    tf2_lidar_transform,
     TimerAction(period=2.0, actions=[rviz_node]),
   ])

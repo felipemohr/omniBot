@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnibot_base">
+
+  <xacro:macro name="omnibot_base">
+    
+    <link name="base_link">
+      <inertial>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <mass value="0.325"/>
+        <inertia ixx="0.00112318" ixy="-4.044e-6" ixz="-1.882e-6" iyy="0.002" iyz="9.405e-7" izz="0.003"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <!-- <box size="${base_length} ${base_width} ${base_height}"/> -->
+          <mesh filename="package://omnibot_description/meshes/base_link.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <box size="${base_length} ${base_width} ${base_height}"/>
+        </geometry>
+      </collision>  
+    </link>
+
+    <link name="base_footprint"/>
+
+    <joint name="base_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="base_footprint"/>
+      <origin xyz="0.0 0.0 ${-(wheel_radius-wheel_z_offset)}" rpy="0 0 0"/>
+    </joint>
+
+  </xacro:macro>
+
+</robot>

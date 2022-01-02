@@ -12,29 +12,17 @@
       <xacro:insert_block name="joint_pose"/>
     </joint>
 
-    <!-- IMU Plugin -->
-    <!-- <gazebo reference="imu_link">
-      <sensor name="imu_sensor" type="imu">
-        <plugin filename="ignition-gazebo-imu-system"
-                name="ignition::gazebo::systems::Imu"/>
-        <always_on>1</always_on>
-        <update_rate>30</update_rate>
-        <visualize>true</visualize>
-        <topic>imu</topic>
-      </sensor>
-    </gazebo> -->
-
   </xacro:macro>
 
 
-  <!-- Lidar Plugin macro -->
+  <!-- Lidar macro -->
   <xacro:macro name="lidar" params="*joint_pose">  
 
     <link name="lidar_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="0.0508" length="0.04"/>
+          <mesh filename="package://omnibot_description/meshes/lidar.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -55,14 +43,10 @@
       <child link="lidar_link"/>
       <xacro:insert_block name="joint_pose"/>
     </joint>
-
-    <!-- Lidar Plugin -->
-
-
   </xacro:macro>
 
 
-  <!-- Camera Plugin macro -->
+  <!-- Camera macro -->
   <xacro:macro name="camera" params="*joint_pose">
 
     <link name="camera_link">
@@ -74,7 +58,7 @@
       <visual>
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         <geometry>
-          <box size="0.001 0.025 0.024"/>
+          <mesh filename="package://omnibot_description/meshes/raspicam.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -91,7 +75,6 @@
       <xacro:insert_block name="joint_pose"/>
     </joint>    
 
-    <!-- Camera Plugin -->
   </xacro:macro>
 
 </robot>

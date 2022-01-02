@@ -14,83 +14,23 @@
 
   <xacro:property name="M_PI" value="3.14159"/>
 
+  <xacro:include filename="$(find omnibot_description)/urdf/base.urdf.xacro"/>
+  <xacro:include filename="$(find omnibot_description)/urdf/wheel.urdf.xacro"/>
   <xacro:include filename="$(find omnibot_description)/urdf/sensors.urdf.xacro"/>
 
-  <xacro:macro name="omnibot_wheel" params="prefix *joint_pose">
-    <link name="${prefix}_wheel_link">
-      <visual>
-        <origin xyz="0.0 0.0 0.0" rpy="${M_PI/2} 0.0 0.0"/>
-        <geometry>
-          <!-- <mesh filename="package://omnibot_description/meshes/omni_wheel.dae"/> -->
-          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
-        </geometry>
-        <material name="LightGrey">
-          <color rgba="0.7 0.7 0.7 1.0"/>
-        </material>
-      </visual>
-      <collision>
-        <origin xyz="0.0 0.0 0.0" rpy="${M_PI/2} 0.0 0.0"/>
-        <geometry>
-          <!-- <mesh filename="package://omnibot_description/meshes/omni_wheel.stl"/> -->
-          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
-        </geometry>
-      </collision>
-      <inertial>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        <mass value="0.060"/>
-        <inertia ixx="1e-6" ixy="0.0" ixz="0.0" iyy="1e-6" iyz="0.0" izz="1e-6"/>
-      </inertial>
-    </link>
+  <xacro:omnibot_base/>
 
-    <joint name="${prefix}_wheel_joint" type="continuous">
-      <xacro:insert_block name="joint_pose"/>
-      <parent link="base_link"/>
-      <child link="${prefix}_wheel_link"/>
-      <axis xyz="0 1 0" rpy="0.0 0.0 0.0"/>
-    </joint>
-    
-  </xacro:macro>
-
-  <link name="base_link">
-    <inertial>
-      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-      <mass value="0.325"/>
-      <inertia ixx="0.00112318" ixy="-4.044e-6" ixz="-1.882e-6" iyy="0.002" iyz="9.405e-7" izz="0.003"/>
-    </inertial>
-    <visual>
-      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-      <geometry>
-        <box size="${base_length} ${base_width} ${base_height}"/>
-        <!-- <mesh filename="package://omnibot_description/meshes/base_link.stl"/> -->
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-      <geometry>
-        <box size="${base_length} ${base_width} ${base_height}"/>
-      </geometry>
-    </collision>  
-  </link>
-
-  <link name="base_footprint"/>
-
-  <joint name="base_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="base_footprint"/>
-    <origin xyz="0.0 0.0 ${-(wheel_radius-wheel_z_offset)}" rpy="0 0 0"/>
-  </joint>
-
-  <xacro:omnibot_wheel prefix="front_left">
+  <xacro:omnibot_wheel prefix="front_right">
     <origin xyz="${wheel_x_offset} ${-wheel_y_offset} ${wheel_z_offset}" rpy="0.0 0.0 0.0"/>
   </xacro:omnibot_wheel>
-  <xacro:omnibot_wheel prefix="front_right">
+  <xacro:omnibot_wheel prefix="front_left">
     <origin xyz="${wheel_x_offset} ${wheel_y_offset} ${wheel_z_offset}" rpy="0.0 0.0 0.0"/>
   </xacro:omnibot_wheel>
   <xacro:omnibot_wheel prefix="back_left">
-    <origin xyz="${-wheel_x_offset} ${-wheel_y_offset} ${wheel_z_offset}" rpy="0.0 0.0 0.0"/>
+    <origin xyz="${-wheel_x_offset} ${wheel_y_offset} ${wheel_z_offset}" rpy="0.0 0.0 0.0"/>
   </xacro:omnibot_wheel>
   <xacro:omnibot_wheel prefix="back_right">
-    <origin xyz="${-wheel_x_offset} ${wheel_y_offset} ${wheel_z_offset}" rpy="0.0 0.0 0.0"/>
+    <origin xyz="${-wheel_x_offset} ${-wheel_y_offset} ${wheel_z_offset}" rpy="0.0 0.0 0.0"/>
   </xacro:omnibot_wheel>
 
   <xacro:imu>
@@ -98,11 +38,11 @@
   </xacro:imu>
 
   <xacro:lidar>
-    <origin xyz="0.0 0.0 ${base_height/2 + 0.02}" rpy="0.0 0.0 0.0"/>
+    <origin xyz="-0.013 0.0 ${base_height/2 + 0.01}" rpy="0.0 0.0 0.0"/>
   </xacro:lidar>
 
   <xacro:camera>
-    <origin xyz="${base_length/2} 0.0 ${base_height/2}" rpy="0.0 0.0 0.0"/>
+    <origin xyz="${base_length/2 - 0.0014} 0.0 0.018" rpy="0.0 0.0 0.0"/>
   </xacro:camera>
 
   <gazebo>
