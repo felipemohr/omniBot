@@ -76,12 +76,12 @@ def generate_launch_description():
     output='screen'
   )
 
-  tf2_lidar_transform = Node(
-            package="tf2_ros",
-            executable="static_transform_publisher",
-            output="screen" ,
-            arguments=["0", "0", "0", "0", "0", "0", "lidar_link", "omnibot/base_link/sensor_ray"]
-  )
+  # tf2_lidar_transform = Node(
+  #           package="tf2_ros",
+  #           executable="static_transform_publisher",
+  #           output="screen" ,
+  #           arguments=["0", "0", "0", "0", "0", "0", "lidar_link", "omnibot/base_link/sensor_ray"]
+  # )
 
   return launch.LaunchDescription([
     launch.actions.DeclareLaunchArgument(name='world', default_value=default_world_path,
@@ -97,6 +97,6 @@ def generate_launch_description():
     ign_ros_bridge,
     # joint_state_publisher,
     robot_state_publisher,
-    tf2_lidar_transform,
+    # tf2_lidar_transform,
     TimerAction(period=2.0, actions=[rviz_node]),
   ])

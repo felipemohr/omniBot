@@ -6,11 +6,11 @@
     <link name="base_link">
       <inertial>
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        <mass value="0.325"/>
-        <inertia ixx="0.00112318" ixy="-4.044e-6" ixz="-1.882e-6" iyy="0.002" iyz="9.405e-7" izz="0.003"/>
+        <mass value="2.067"/>
+        <inertia ixx="0.00465053" ixy="1.014e-6" ixz="-1.413e-5" iyy="0.00771714" iyz="2.949e-6" izz="0.01114849"/>
       </inertial>
       <visual>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 -0.013" rpy="0.0 0.0 0.0"/>
         <geometry>
           <!-- <box size="${base_length} ${base_width} ${base_height}"/> -->
           <mesh filename="package://omnibot_description/meshes/base_link.dae"/>
