@@ -41,10 +41,14 @@ def generate_launch_description():
             '/imu@sensor_msgs/msg/Imu@ignition.msgs.IMU',
             '/lidar@sensor_msgs/msg/LaserScan@ignition.msgs.LaserScan',
             '/camera@sensor_msgs/msg/Image@ignition.msgs.Image',
-            '/camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo'
+            '/camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo',
+            '/model/omnibot/cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist',
+            '/model/omnibot/odometry@nav_msgs/msg/Odometry@ignition.msgs.Odometry',
             ],
     remappings=[
         ('/world/omni_world/model/omnibot/joint_state', 'joint_states'),
+        ('/model/omnibot/cmd_vel', 'cmd_vel'),
+        ('/model/omnibot/odometry', 'odom')
     ],
     output='screen'
   )
