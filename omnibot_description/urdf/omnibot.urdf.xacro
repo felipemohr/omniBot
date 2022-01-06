@@ -38,7 +38,7 @@
   </xacro:imu>
 
   <xacro:lidar>
-    <origin xyz="-0.013 0.0 ${base_height/2 + 0.01}" rpy="0.0 0.0 0.0"/>
+    <origin xyz="-0.013 0.0 ${base_height/2 + 0.024}" rpy="0.0 0.0 0.0"/>
   </xacro:lidar>
 
   <xacro:camera>

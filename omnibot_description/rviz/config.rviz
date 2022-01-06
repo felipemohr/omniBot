@@ -6,7 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /RobotModel1
+        - /LaserScan1
       Splitter Ratio: 0.5
     Tree Height: 434
 Visualization Manager:
@@ -32,7 +32,7 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Class: rviz_default_plugins/RobotModel
-      Collision Enabled: false
+      Collision Enabled: true
       Description File: ""
       Description Source: Topic
       Description Topic:
@@ -95,7 +95,7 @@ Visualization Manager:
       TF Prefix: ""
       Update Interval: 0
       Value: true
-      Visual Enabled: true
+      Visual Enabled: false
     - Class: rviz_default_plugins/TF
       Enabled: false
       Frame Timeout: 15
@@ -113,14 +113,14 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
+        Max Value: 0.062199998646974564
+        Min Value: 0.062199998646974564
         Value: true
       Axis: Z
       Channel Name: intensity
       Class: rviz_default_plugins/LaserScan
-      Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color: 252; 233; 79
+      Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -132,8 +132,8 @@ Visualization Manager:
       Position Transformer: XYZ
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.009999999776482582
-      Style: Flat Squares
+      Size (m): 0.004999999888241291
+      Style: Points
       Topic:
         Depth: 5
         Durability Policy: Volatile
@@ -183,25 +183,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 0.6566473841667175
+      Distance: 1.1351686716079712
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.03679613023996353
-        Y: 0.04384253919124603
-        Z: -0.012973678298294544
+        X: 0.10920248925685883
+        Y: 0.07403989881277084
+        Z: 0.033326007425785065
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.5503984093666077
+      Pitch: 0.4553980231285095
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.298576831817627
+      Yaw: 5.003566741943359
     Saved: ~
 Window Geometry:
   Camera:

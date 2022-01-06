@@ -29,17 +29,17 @@ def generate_launch_description():
     executable='create',
     arguments=['-name', 'omnibot',
                '-topic', 'robot_description',
+              #  '-file', default_model_sdf_path,
                '-z', '0.25',
-              #  '-file', default_model_sdf_path
               ],
     output='screen'
   )
 
-  # joint_state_publisher = Node(
-  #   package='joint_state_publisher',
-  #   executable='joint_state_publisher',
-  #   name='joint_state_publisher'
-  # )
+  joint_state_publisher = Node(
+    package='joint_state_publisher',
+    executable='joint_state_publisher',
+    name='joint_state_publisher'
+  )
 
   robot_state_publisher = Node(
     package='robot_state_publisher',
@@ -76,12 +76,12 @@ def generate_launch_description():
     output='screen'
   )
 
-  # tf2_lidar_transform = Node(
-  #           package="tf2_ros",
-  #           executable="static_transform_publisher",
-  #           output="screen" ,
-  #           arguments=["0", "0", "0", "0", "0", "0", "lidar_link", "omnibot/base_link/sensor_ray"]
-  # )
+  tf2_lidar_transform = Node(
+            package="tf2_ros",
+            executable="static_transform_publisher",
+            output="screen" ,
+            arguments=["0", "0", "0", "0", "0", "0", "lidar_link", "omnibot/base_link/gpu_lidar"]
+  )
 
   return launch.LaunchDescription([
     launch.actions.DeclareLaunchArgument(name='world', default_value=default_world_path,
@@ -95,8 +95,8 @@ def generate_launch_description():
     ignition,
     spawn_entity,
     ign_ros_bridge,
-    # joint_state_publisher,
+    joint_state_publisher,
     robot_state_publisher,
-    # tf2_lidar_transform,
+    tf2_lidar_transform,
     TimerAction(period=2.0, actions=[rviz_node]),
   ])

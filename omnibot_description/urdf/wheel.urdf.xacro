@@ -6,8 +6,9 @@
       <visual>
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         <geometry>
-          <mesh filename="package://omnibot_description/meshes/mecanum_wheel_${prefix}.dae"/>
           <!-- <cylinder radius="${wheel_radius}" length="${wheel_width}"/> -->
+          <!-- <mesh filename="package://omnibot_description/meshes/mecanum_wheel_${prefix}.dae"/> -->
+          <mesh filename="$(find omnibot_description)/meshes/mecanum_wheel_${prefix}.dae"/>
         </geometry>
       </visual>
       <collision>

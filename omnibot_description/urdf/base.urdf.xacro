@@ -2,18 +2,19 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnibot_base">
 
   <xacro:macro name="omnibot_base">
-    
+
     <link name="base_link">
       <inertial>
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 -0.013" rpy="0.0 0.0 0.0"/>
         <mass value="2.067"/>
         <inertia ixx="0.00465053" ixy="1.014e-6" ixz="-1.413e-5" iyy="0.00771714" iyz="2.949e-6" izz="0.01114849"/>
       </inertial>
       <visual>
-        <origin xyz="0.0 0.0 -0.013" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         <geometry>
           <!-- <box size="${base_length} ${base_width} ${base_height}"/> -->
-          <mesh filename="package://omnibot_description/meshes/base_link.dae"/>
+          <!-- <mesh filename="package://omnibot_description/meshes/base_link.dae"/> -->
+          <mesh filename="$(find omnibot_description)/meshes/base_link.dae"/>
         </geometry>
       </visual>
       <collision>
@@ -21,7 +22,7 @@
         <geometry>
           <box size="${base_length} ${base_width} ${base_height}"/>
         </geometry>
-      </collision>  
+      </collision>
     </link>
 
     <link name="base_footprint"/>
