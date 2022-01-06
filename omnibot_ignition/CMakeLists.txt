@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(omnibot_description)
+project(omnibot_ignition)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -17,13 +17,14 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(urdf REQUIRED)
+find_package(ros_ign_gazebo REQUIRED)
+find_package(ros_ign_bridge REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
 
 install(
-  DIRECTORY urdf launch rviz meshes
+  DIRECTORY worlds launch
   DESTINATION share/${PROJECT_NAME}
 )
 

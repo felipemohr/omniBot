@@ -9,18 +9,17 @@ import os
 
 def generate_launch_description():
 
-  pkg_share = FindPackageShare(package='omnibot_description').find('omnibot_description')
-  default_world_path = os.path.join(pkg_share, 'worlds/omni_world.sdf')
-  # default_model_sdf_path = os.path.join(pkg_share, 'urdf/omnibot.sdf')
-  default_model_urdf_path = os.path.join(pkg_share, 'urdf/omnibot.urdf.xacro')
-  default_rviz_config_path = os.path.join(pkg_share, 'rviz/config.rviz')
+  ros_ign_gazebo_pkg_share = FindPackageShare('ros_ign_gazebo').find('ros_ign_gazebo')
+  omnibot_description_pkg_share = FindPackageShare(package='omnibot_description').find('omnibot_description')
 
-  pkg_ros_ign_gazebo = FindPackageShare('ros_ign_gazebo').find('ros_ign_gazebo')
+  default_world_path = os.path.join(omnibot_description_pkg_share, 'worlds/omni_world.sdf')
+  default_model_urdf_path = os.path.join(omnibot_description_pkg_share, 'urdf/omnibot.urdf.xacro')
+  default_rviz_config_path = os.path.join(omnibot_description_pkg_share, 'rviz/config.rviz')
+
 
   ignition = IncludeLaunchDescription(
              PythonLaunchDescriptionSource(
-               os.path.join(pkg_ros_ign_gazebo, 'launch', 'ign_gazebo.launch.py')),
-            #  launch_arguments={'ign_args': '-r empty.sdf'}.items(),
+               os.path.join(ros_ign_gazebo_pkg_share, 'launch', 'ign_gazebo.launch.py')),
              launch_arguments={'ign_args': ['-r ', LaunchConfiguration('world')]}.items(),
   )
 
@@ -29,7 +28,6 @@ def generate_launch_description():
     executable='create',
     arguments=['-name', 'omnibot',
                '-topic', 'robot_description',
-              #  '-file', default_model_sdf_path,
                '-z', '0.25',
               ],
     output='screen'
@@ -47,8 +45,6 @@ def generate_launch_description():
     parameters=[{'robot_description': Command(['xacro ', default_model_urdf_path]),
                  'use_sim_time': LaunchConfiguration('use_sim_time'),
                 }],
-    # parameters=[{'robot_description': LaunchConfiguration('model'),
-    # output='both'
   )
   
   rviz_node = Node(
@@ -86,8 +82,6 @@ def generate_launch_description():
   return launch.LaunchDescription([
     launch.actions.DeclareLaunchArgument(name='world', default_value=default_world_path,
                                          description='Absolute path to world sdf file'),
-    # launch.actions.DeclareLaunchArgument(name='model', default_value=default_model_path,
-                                        #  description='Absolute path to robot urdf file'),
     launch.actions.DeclareLaunchArgument(name='rvizconfig', default_value=default_rviz_config_path,
                                          description='Absolute path to rviz config file'),
     launch.actions.DeclareLaunchArgument(name='use_sim_time',default_value='true',
