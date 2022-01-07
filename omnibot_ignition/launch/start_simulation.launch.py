@@ -35,7 +35,7 @@ def generate_launch_description():
                                          description='Absolute path to world sdf file'),
     launch.actions.DeclareLaunchArgument(name='model', default_value=default_model_path,
                                          description='Absolute path to robot urdf file'),
-    launch.actions.DeclareLaunchArgument(name='use_rviz', default_value='true',
+    launch.actions.DeclareLaunchArgument(name='use_rviz', default_value='false',
                                          description='Use RViz if true'),
     launch.actions.DeclareLaunchArgument(name='rviz_config', default_value=default_rviz_config_path,
                                          description='Absolute path to rviz config file'),

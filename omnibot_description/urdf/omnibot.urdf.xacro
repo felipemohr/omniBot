@@ -62,6 +62,11 @@
       <odom_topic>odom</odom_topic> -->
     </plugin>
 
+    <plugin
+      filename="libOmniDrive.so"
+      name="omni_drive::OmniDrive">
+    </plugin>
+
   </gazebo>
 
 </robot>
