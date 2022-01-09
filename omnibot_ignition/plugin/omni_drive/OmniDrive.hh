@@ -117,14 +117,33 @@ namespace omni_drive
       /** @brief Calculated speed of rear right joint **/
       double rearRightJointSpeed{0};
 
+      /** @brief Wheel radius **/
+      double wheelRadius{0.2};
+
       /** @brief Distance between right and left wheels **/
       double wheelRightLeftSeparation{1.0};
 
       /** @brief Distance between front and rear wheels **/
       double wheelFrontRearSeparation{1.0};
 
-      /** @brief Wheel radius **/
-      double wheelRadius{0.2};
+      /** @brief Distance center of robot and center of the wheels **/
+      double wheelCenterSeparation;
+
+      /** @brief Angle between center of robot and center of the
+       * front left wheel, relative to robot X-axis **/
+      double alphaFrontLeftWheel;
+
+      /** @brief Angle between center of robot and center of the
+       * front right wheelm, relative to robot X-axis **/
+      double alphaFrontRightWheel;
+
+      /** @brief Angle between center of robot and center of the
+       * rear left wheel, relative to robot X-axis **/
+      double alphaRearLeftWheel;
+
+      /** @brief Angle between center of robot and center of the
+       * rear right wheel, relative to robot X-axis **/
+      double alphaRearRightWheel;
 
       /** @brief Model interface **/
       Model model{kNullEntity};
@@ -199,7 +218,7 @@ namespace omni_drive
       std::unique_ptr<OmniDrivePrivate> dataPtr;
   };
   
-}// namespace omni_drive
+} // namespace omni_drive
 
 } // namespace IGNITION_GAZEBO_VERSION_NAMESPACE
 } // namespace gazebo

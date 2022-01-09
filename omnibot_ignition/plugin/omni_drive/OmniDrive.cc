@@ -57,6 +57,14 @@ void OmniDrive::Configure(const Entity &_entity,
   this->dataPtr->wheelRadius = _sdf->Get<double>("wheel_radius",
       this->dataPtr->wheelRadius).first;
 
+  // Calculates angle and distance between center of robot and center of the wheels, relative to robot X-axis.
+  this->dataPtr->alphaFrontLeftWheel  = atan2(this->dataPtr->wheelRightLeftSeparation, this->dataPtr->wheelFrontRearSeparation);
+  this->dataPtr->alphaFrontRightWheel = -this->dataPtr->alphaFrontLeftWheel;
+  this->dataPtr->alphaRearLeftWheel   = M_PI/2 + this->dataPtr->alphaFrontLeftWheel;
+  this->dataPtr->alphaRearRightWheel  = -this->dataPtr->alphaRearLeftWheel;
+  
+  this->dataPtr->wheelCenterSeparation = sqrt( pow(this->dataPtr->wheelRightLeftSeparation, 2)/4 + pow(this->dataPtr->wheelFrontRearSeparation, 2)/4 );
+
   // Instantiate the speed limiters.
   this->dataPtr->limiterLin = std::make_unique<ignition::math::SpeedLimiter>();
   this->dataPtr->limiterAng = std::make_unique<ignition::math::SpeedLimiter>();
@@ -147,13 +155,150 @@ void OmniDrive::PreUpdate(const ignition::gazebo::UpdateInfo &_info,
 {
   IGN_PROFILE("OmniDrive::PreUpdate");
 
-  std::string msg = "PreUpdate! Simulation is ";
-  if (!_info.paused)
-    msg += "not ";
-  msg += "paused.";
+  // \TODO(anyone) Support rewind
+  if (_info.dt < std::chrono::steady_clock::duration::zero())
+  {
+    ignwarn << "Detected jump back in time ["
+        << std::chrono::duration_cast<std::chrono::seconds>(_info.dt).count()
+        << "s]. System may not work properly." << std::endl;
+  }
 
-  ignmsg << msg << std::endl;
-  // std::cout << msg << std::endl;
+  // If the joints haven't been identified yet, look for them
+  static std::set<std::string> warnedModels;
+  auto modelName = this->dataPtr->model.Name(_ecm);
+  if (!this->dataPtr->frontLeftJoint || !this->dataPtr->frontRightJoint || 
+      !this->dataPtr->rearLeftJoint  || !this->dataPtr->rearRightJoint)
+  {
+
+    bool warned{false};
+
+    auto name = this->dataPtr->frontLeftJointName;
+    Entity joint = this->dataPtr->model.JointByName(_ecm, name);
+    if (joint != kNullEntity)
+      this->dataPtr->frontLeftJoint = joint;
+    else if (warnedModels.find(modelName) == warnedModels.end())
+    {
+      ignwarn << "Failed to find front left joint [" << name << "] for model ["
+              << modelName << "]" << std::endl;
+      warned = true;
+    }
+
+    name = this->dataPtr->frontRightJointName;
+    joint = this->dataPtr->model.JointByName(_ecm, name);
+    if (joint != kNullEntity)
+      this->dataPtr->frontRightJoint = joint;
+    else if (warnedModels.find(modelName) == warnedModels.end())
+    {
+      ignwarn << "Failed to find front right joint [" << name << "] for model ["
+              << modelName << "]" << std::endl;
+      warned = true;
+    }
+
+    name = this->dataPtr->rearLeftJointName;
+    joint = this->dataPtr->model.JointByName(_ecm, name);
+    if (joint != kNullEntity)
+      this->dataPtr->rearLeftJoint = joint;
+    else if (warnedModels.find(modelName) == warnedModels.end())
+    {
+      ignwarn << "Failed to find rear left joint [" << name << "] for model ["
+              << modelName << "]" << std::endl;
+      warned = true;
+    }
+
+    name = this->dataPtr->rearRightJointName;
+    joint = this->dataPtr->model.JointByName(_ecm, name);
+    if (joint != kNullEntity)
+      this->dataPtr->rearRightJoint = joint;
+    else if (warnedModels.find(modelName) == warnedModels.end())
+    {
+      ignwarn << "Failed to find rear right joint [" << name << "] for model ["
+              << modelName << "]" << std::endl;
+      warned = true;
+    }
+
+    if (warned)
+      warnedModels.insert(modelName);
+  }
+
+  if (!this->dataPtr->frontLeftJoint || !this->dataPtr->frontRightJoint || 
+      !this->dataPtr->rearLeftJoint  || !this->dataPtr->rearRightJoint)
+    return;
+  
+  if (warnedModels.find(modelName) != warnedModels.end())
+  {
+    ignmsg << "Found joints for model [" << modelName
+           << "], plugin will start working." << std::endl;
+    warnedModels.erase(modelName);
+  }
+
+  // Nothing left to do if paused.
+  if (_info.paused)
+    return;
+
+  Entity joint = this->dataPtr->frontLeftJoint;
+  // skip this entity if it has been removed
+  if (_ecm.HasEntity(joint))
+  {
+    // Update wheel velocity
+    auto vel = _ecm.Component<components::JointVelocityCmd>(joint);
+    if (vel == nullptr)
+      _ecm.CreateComponent( joint, components::JointVelocityCmd({this->dataPtr->frontLeftJointSpeed}));
+    else
+      *vel = components::JointVelocityCmd({this->dataPtr->frontLeftJointSpeed});
+  }
+
+  joint = this->dataPtr->frontRightJoint;
+  // skip this entity if it has been removed
+  if (_ecm.HasEntity(joint))
+  {
+    // Update wheel velocity
+    auto vel = _ecm.Component<components::JointVelocityCmd>(joint);
+    if (vel == nullptr)
+      _ecm.CreateComponent( joint, components::JointVelocityCmd({this->dataPtr->frontRightJointSpeed}));
+    else
+      *vel = components::JointVelocityCmd({this->dataPtr->frontRightJointSpeed});
+  }
+
+  joint = this->dataPtr->rearLeftJoint;
+  // skip this entity if it has been removed
+  if (_ecm.HasEntity(joint))
+  {
+    // Update wheel velocity
+    auto vel = _ecm.Component<components::JointVelocityCmd>(joint);
+    if (vel == nullptr)
+      _ecm.CreateComponent( joint, components::JointVelocityCmd({this->dataPtr->rearLeftJointSpeed}));
+    else
+      *vel = components::JointVelocityCmd({this->dataPtr->rearLeftJointSpeed});
+  }
+
+  joint = this->dataPtr->rearRightJoint;
+  // skip this entity if it has been removed
+  if (_ecm.HasEntity(joint))
+  {
+    // Update wheel velocity
+    auto vel = _ecm.Component<components::JointVelocityCmd>(joint);
+    if (vel == nullptr)
+      _ecm.CreateComponent( joint, components::JointVelocityCmd({this->dataPtr->rearRightJointSpeed}));
+    else
+      *vel = components::JointVelocityCmd({this->dataPtr->rearRightJointSpeed});
+  }
+
+  // Create the joint position components if they don't exist.
+  auto frontLeftPos = _ecm.Component<components::JointPosition>(this->dataPtr->frontLeftJoint);
+  if (!frontLeftPos && _ecm.HasEntity(this->dataPtr->frontLeftJoint))
+    _ecm.CreateComponent(this->dataPtr->frontLeftJoint, components::JointPosition());
+
+  auto frontRightPos = _ecm.Component<components::JointPosition>(this->dataPtr->frontRightJoint);
+  if (!frontRightPos && _ecm.HasEntity(this->dataPtr->frontRightJoint))
+    _ecm.CreateComponent(this->dataPtr->frontRightJoint, components::JointPosition());
+
+  auto rearLeftPos = _ecm.Component<components::JointPosition>(this->dataPtr->rearLeftJoint);
+  if (!rearLeftPos && _ecm.HasEntity(this->dataPtr->rearLeftJoint))
+    _ecm.CreateComponent(this->dataPtr->rearLeftJoint, components::JointPosition());
+
+  auto rearRightPos = _ecm.Component<components::JointPosition>(this->dataPtr->rearRightJoint);
+  if (!rearRightPos && _ecm.HasEntity(this->dataPtr->rearRightJoint))
+    _ecm.CreateComponent(this->dataPtr->rearRightJoint, components::JointPosition());
 
 }
 
@@ -202,20 +347,11 @@ void OmniDrivePrivate::UpdateVelocity(const ignition::gazebo::UpdateInfo &_info,
   this->last0Cmd.lin_y = linVelY;
   this->last0Cmd.ang_z = angVelZ;
 
-  // Calculates angle and distance between center of robot and center of the wheels, relative to robot X-axis.
-  // TODO: put it on Configure
-  double alpha1 = atan2(this->wheelRightLeftSeparation, this->wheelFrontRearSeparation);
-  double alpha2 = -alpha1;
-  double alpha3 = M_PI/2 + alpha1;
-  double alpha4 = -alpha3;
-  double l = sqrt( pow(this->wheelRightLeftSeparation, 2)/4 + pow(this->wheelFrontRearSeparation, 2)/4 );
-
-
   // Convert the target velocities to joint velocities.
-  this->frontLeftJointSpeed  = (1/this->wheelRadius) * (linVelX - linVelY + l*( sin( 3*M_PI_4 - alpha1) / sin(-M_PI_4) )*angVelZ);
-  this->frontRightJointSpeed = (1/this->wheelRadius) * (linVelX + linVelY + l*( sin(-3*M_PI_4 - alpha2) / sin( M_PI_4) )*angVelZ);
-  this->rearLeftJointSpeed   = (1/this->wheelRadius) * (linVelX + linVelY + l*( sin( M_PI_4 - alpha3) / sin(M_PI_4) )*angVelZ);
-  this->rearRightJointSpeed  = (1/this->wheelRadius) * (linVelX - linVelY + l*( sin(-M_PI_4 - alpha4) / sin(-M_PI_4) )*angVelZ);
+  this->frontLeftJointSpeed  = (1/this->wheelRadius) * (linVelX - linVelY + this->wheelCenterSeparation*( sin( 3*M_PI_4 - this->alphaFrontLeftWheel ) / sin(-M_PI_4) )*angVelZ);
+  this->frontRightJointSpeed = (1/this->wheelRadius) * (linVelX + linVelY + this->wheelCenterSeparation*( sin(-3*M_PI_4 - this->alphaFrontRightWheel) / sin( M_PI_4) )*angVelZ);
+  this->rearLeftJointSpeed   = (1/this->wheelRadius) * (linVelX + linVelY + this->wheelCenterSeparation*( sin( M_PI_4   - this->alphaRearLeftWheel  ) / sin( M_PI_4) )*angVelZ);
+  this->rearRightJointSpeed  = (1/this->wheelRadius) * (linVelX - linVelY + this->wheelCenterSeparation*( sin(-M_PI_4   - this->alphaRearRightWheel ) / sin(-M_PI_4) )*angVelZ);
 
 }
 
