@@ -316,7 +316,6 @@ void OmniDrive::PostUpdate(const UpdateInfo &_info,
 
 }
 
-
 //////////////////////////////////////////////////
 void OmniDrivePrivate::UpdateVelocity(const ignition::gazebo::UpdateInfo &_info,
                                       const ignition::gazebo::EntityComponentManager &/*_ecm*/)
@@ -354,7 +353,6 @@ void OmniDrivePrivate::UpdateVelocity(const ignition::gazebo::UpdateInfo &_info,
   this->rearRightJointSpeed  = (1/this->wheelRadius) * (linVelX - linVelY + this->wheelCenterSeparation*( sin(-M_PI_4   - this->alphaRearRightWheel ) / sin(-M_PI_4) )*angVelZ);
 
 }
-
 
 //////////////////////////////////////////////////
 void OmniDrivePrivate::OnCmdVel(const msgs::Twist &_msg)

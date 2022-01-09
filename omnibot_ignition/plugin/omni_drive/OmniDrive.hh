@@ -184,8 +184,6 @@ namespace omni_drive
   };
 
 
-
-
   class OmniDrive
       : public System,
         public ISystemConfigure,

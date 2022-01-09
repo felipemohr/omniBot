@@ -61,6 +61,10 @@
       <wheel_radius>0.039</wheel_radius>
     </plugin>
 
+    <plugin filename="libignition-gazebo-velocity-control-system.so"
+            name="ignition::gazebo::systems::VelocityControl">
+    </plugin>
+
   </gazebo>
 
 </robot>
