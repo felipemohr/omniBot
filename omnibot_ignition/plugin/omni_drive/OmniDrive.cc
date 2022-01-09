@@ -177,6 +177,30 @@ void OmniDrive::PostUpdate(const UpdateInfo &_info,
 }
 
 
+//////////////////////////////////////////////////
+void OmniDrivePrivate::OnCmdVel(const msgs::Twist &_msg)
+{
+  std::lock_guard<std::mutex> lock(this->mutex);
+  if (this->enabled)
+  {
+    this->targetVel = _msg;
+  }
+}
+
+//////////////////////////////////////////////////
+void OmniDrivePrivate::OnEnable(const msgs::Boolean &_msg)
+{
+  std::lock_guard<std::mutex> lock(this->mutex);
+  this->enabled = _msg.data();
+  if (!this->enabled)
+  {
+    math::Vector3d zeroVector{0, 0, 0};
+    msgs::Set(this->targetVel.mutable_linear(), zeroVector);
+    msgs::Set(this->targetVel.mutable_angular(), zeroVector);
+  }
+}
+
+
 IGNITION_ADD_PLUGIN(OmniDrive,
                     ignition::gazebo::System,
                     OmniDrive::ISystemConfigure,
