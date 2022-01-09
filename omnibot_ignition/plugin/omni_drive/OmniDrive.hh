@@ -1,126 +1,151 @@
-#ifndef SYSTEM_PLUGIN_OMNIDRIVE_HH_
-#define SYSTEM_PLUGIN_OMNIDRIVE_HH_
+#ifndef IGNITION_GAZEBO_SYSTEMS_OMNIDRIVE_HH_
+#define IGNITION_GAZEBO_SYSTEMS_OMNIDRIVE_HH_
 
 #include <memory>
 
 #include <ignition/gazebo/System.hh>
 
+#include <ignition/msgs/odometry.pb.h>
+
+#include <limits>
+#include <mutex>
+#include <set>
+#include <string>
+#include <vector>
+
+#include <ignition/common/Profiler.hh>
+#include <ignition/math/Quaternion.hh>
+#include <ignition/math/SpeedLimiter.hh>
+#include <ignition/plugin/Register.hh>
 #include <ignition/transport/Node.hh>
 
-
-using namespace ignition;
-using namespace gazebo;
+#include "ignition/gazebo/components/CanonicalLink.hh"
+#include "ignition/gazebo/components/JointPosition.hh"
+#include "ignition/gazebo/components/JointVelocityCmd.hh"
+#include "ignition/gazebo/Link.hh"
+#include "ignition/gazebo/Model.hh"
+#include "ignition/gazebo/Util.hh"
 
 namespace ignition
 {
 namespace gazebo
 {
-
+// Inline bracket to help doxygen filtering.
+inline namespace IGNITION_GAZEBO_VERSION_NAMESPACE {
 namespace omni_drive
 {
-  class OmniDrive:
-    public System,
-    public ISystemConfigure,
-    public ISystemPreUpdate,
-    public ISystemPostUpdate
+
+  class OmniDrivePrivate
   {
-    public:
-      OmniDrive();
-      ~OmniDrive();
+    /**
+     * @brief Callback for velocity subscription.
+     * 
+     * @param _msg Velocity message.
+     */
+    void OnCmdVel(const ignition::msgs::Twist &_msg);
 
-      void Configure(const Entity &_entity,
-                     const std::shared_ptr<const sdf::Element> &_sdf,
-                     EntityComponentManager &_ecm,
-                     EventManager &_eventMgr);
+    /**
+     * @brief Callback for enable/disable subscription.
+     * 
+     * @param _msg Boolean message.
+     */
+    void OnEnable(const ignition::msgs::Boolean &_msg);
 
-      void PreUpdate(const UpdateInfo &_info,
-                     EntityComponentManager &_ecm);
+    /**
+     * @brief Update linear and angular velocities.
+     * 
+     * @param _info System update information.
+     * @param _ecm  The EntityComponentManager of the given simulation instance.
+     */
+    void UpdateVelocity(const ignition::gazebo::UpdateInfo &_info,
+                        const ignition::gazebo::EntityComponentManager &_ecm);
 
-      void PostUpdate(const UpdateInfo &_info,
-                      const EntityComponentManager &_ecm);
+    /** @brief Ignition communication node **/
+    transport::Node node;
 
+    /** @brief Entity of the front left joint **/
+    Entity frontLeftJoint;
 
-    protected:
-      /**
-       * @brief Callback for velocity subscription.
-       * 
-       * @param _msg Velocity message.
-       */
-      void OnCmdVel(const ignition::msgs::Twist &_msg);
+    /** @brief Entity of the back left joint **/
+    Entity backLeftJoint;
 
-      /**
-       * @brief Callback for enable/disable subscription.
-       * 
-       * @param _msg Boolean message.
-       */
-      void OnEnable(const ignition::msgs::Boolean &_msg);
+    /** @brief Entity of the front right joint **/
+    Entity frontRightJoint;
 
-      /**
-       * @brief Update linear and angular velocities.
-       * 
-       * @param _info System update information.
-       * @param _ecm  The EntityComponentManager of the given simulation instance.
-       */
-      void UpdateVelocity(const ignition::gazebo::UpdateInfo &_info,
-                          const ignition::gazebo::EntityComponentManager &_ecm);
+    /** @brief Entity of the back right joint **/
+    Entity backRightJoint;
 
-      /** @brief Ignition communication node **/
-      transport::Node node;
+    /** @brief Name of the front left joint **/
+    std::string frontLeftJointName;
 
-      /** @brief Entity of the front left joint **/
-      Entity frontLeftJoint;
+    /** @brief Name of the back left joint **/
+    std::string backLeftJointName;
 
-      /** @brief Entity of the back left joint **/
-      Entity backLeftJoint;
+    /** @brief Name of the front right joint **/
+    std::string frontRightJointName;
 
-      /** @brief Entity of the front right joint **/
-      Entity frontRightJoint;
+    /** @brief Name of the back right joint **/
+    std::string backRightJointName;
 
-      /** @brief Entity of the back right joint **/
-      Entity backRightJoint;
+    /** @brief Calculated speed of front left joint **/
+    double frontLeftJointSpeed{0};
 
-      /** @brief Name of the front left joint **/
-      std::string frontLeftJointName;
+    /** @brief Calculated speed of back left joint **/
+    double backLeftJointSpeed{0};
 
-      /** @brief Name of the back left joint **/
-      std::string backLeftJointName;
+    /** @brief Calculated speed of front right joint **/
+    double frontRightJointSpeed{0};
 
-      /** @brief Name of the front right joint **/
-      std::string frontRightJointName;
+    /** @brief Calculated speed of back right joint **/
+    double backRightJointSpeed{0};
 
-      /** @brief Name of the back right joint **/
-      std::string backRightJointName;
+    /** @brief Distance between right and left wheels **/
+    double wheelRightLeftSeparation{1.0};
 
-      /** @brief Calculated speed of front left joint **/
-      double frontLeftJointSpeed{0};
+    /** @brief Distance between front and back wheels **/
+    double wheelFrontBackSeparation{1.0};
 
-      /** @brief Calculated speed of back left joint **/
-      double backLeftJointSpeed{0};
-
-      /** @brief Calculated speed of front right joint **/
-      double frontRightJointSpeed{0};
-
-      /** @brief Calculated speed of back right joint **/
-      double backRightJointSpeed{0};
-
-      /** @brief Distance between right and left wheels **/
-      double wheelRightLeftSeparation{1.0};
-
-      /** @brief Distance between front and back wheels **/
-      double wheelFrontBackSeparation{1.0};
-
-      /** @brief Wheel radius **/
-      double wheelRadius{0.2};
-
-
-
+    /** @brief Wheel radius **/
+    double wheelRadius{0.2};
   };
 
 
-} // namespace omni_drive
-
-} // namespace gazebo
-} // namespace ignition
 
 
-# endif // SYSTEM_PLUGIN_OMNIDRIVE_HH_
+  class OmniDrive
+      : public System,
+        public ISystemConfigure,
+        public ISystemPreUpdate,
+        public ISystemPostUpdate
+  {
+    /** @brief Constructor **/
+    public: OmniDrive();
+
+    /** @brief Destructor **/
+    public: ~OmniDrive() override = default;
+
+    /** Documentation inherited **/
+    public: void Configure(const Entity &_entity,
+                           const std::shared_ptr<const sdf::Element> &_sdf,
+                           EntityComponentManager &_ecm,
+                           EventManager &_eventMgr) override;
+
+    /** Documentation inherited **/
+    public: void PreUpdate(
+                const ignition::gazebo::UpdateInfo &_info,
+                ignition::gazebo::EntityComponentManager &_ecm) override;
+
+    /** Documentation inherited **/
+    public: void PostUpdate(
+                const UpdateInfo &_info,
+                const EntityComponentManager &_ecm) override;
+
+    /** Private data pointer **/
+    private: std::unique_ptr<OmniDrivePrivate> dataPtr;
+  };
+  }
+}
+}
+}
+
+#endif
