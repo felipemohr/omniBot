@@ -163,16 +163,59 @@ void OmniDrive::PostUpdate(const UpdateInfo &_info,
 {
   IGN_PROFILE("OmniDrive::PostUpdate");
 
-  std::string msg = "PosUpdate! Simulation is ";
-  if (!_info.paused)
-    msg += "not ";
-  msg += "paused.";
-
-  // std::cout << msg << std::endl;
-
   // Nothing left to do if paused.
   if (_info.paused)
     return;
+
+  this->dataPtr->UpdateVelocity(_info, _ecm);
+
+}
+
+
+//////////////////////////////////////////////////
+void OmniDrivePrivate::UpdateVelocity(const ignition::gazebo::UpdateInfo &_info,
+                                      const ignition::gazebo::EntityComponentManager &/*_ecm*/)
+{
+  IGN_PROFILE("OmniDrive::UpdateVelocity");
+
+  double linVelX;
+  double linVelY;
+  double angVelZ;
+  {
+    std::lock_guard<std::mutex> lock(this->mutex);
+    linVelX = this->targetVel.linear().x();
+    linVelY = this->targetVel.linear().y();
+    angVelZ = this->targetVel.angular().z();
+  }
+
+  // Limit the target velocity if needed.
+  this->limiterLin->Limit(
+      linVelX, this->last0Cmd.lin_x, this->last1Cmd.lin_x, _info.dt);
+  this->limiterLin->Limit(
+      linVelY, this->last0Cmd.lin_y, this->last1Cmd.lin_y, _info.dt);
+  this->limiterAng->Limit(
+      angVelZ, this->last0Cmd.ang_z, this->last1Cmd.ang_z, _info.dt);
+
+  // Update history of commands.
+  this->last1Cmd = last0Cmd;
+  this->last0Cmd.lin_x = linVelX;
+  this->last0Cmd.lin_y = linVelY;
+  this->last0Cmd.ang_z = angVelZ;
+
+  // Calculates angle and distance between center of robot and center of the wheels, relative to robot X-axis.
+  // TODO: put it on Configure
+  double alpha1 = atan2(this->wheelRightLeftSeparation, this->wheelFrontRearSeparation);
+  double alpha2 = -alpha1;
+  double alpha3 = M_PI/2 + alpha1;
+  double alpha4 = -alpha3;
+  double l = sqrt( pow(this->wheelRightLeftSeparation, 2)/4 + pow(this->wheelFrontRearSeparation, 2)/4 );
+
+
+  // Convert the target velocities to joint velocities.
+  this->frontLeftJointSpeed  = (1/this->wheelRadius) * (linVelX - linVelY + l*( sin( 3*M_PI_4 - alpha1) / sin(-M_PI_4) )*angVelZ);
+  this->frontRightJointSpeed = (1/this->wheelRadius) * (linVelX + linVelY + l*( sin(-3*M_PI_4 - alpha2) / sin( M_PI_4) )*angVelZ);
+  this->rearLeftJointSpeed   = (1/this->wheelRadius) * (linVelX + linVelY + l*( sin( M_PI_4 - alpha3) / sin(M_PI_4) )*angVelZ);
+  this->rearRightJointSpeed  = (1/this->wheelRadius) * (linVelX - linVelY + l*( sin(-M_PI_4 - alpha4) / sin(-M_PI_4) )*angVelZ);
 
 }
 

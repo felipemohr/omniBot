@@ -14,6 +14,7 @@
 #include <vector>
 
 #include <ignition/common/Profiler.hh>
+#include <ignition/math/Angle.hh>
 #include <ignition/math/Quaternion.hh>
 #include <ignition/math/SpeedLimiter.hh>
 #include <ignition/plugin/Register.hh>
@@ -36,9 +37,9 @@ struct Commands
   double lin_y;
 
   /** @brief Angular velocity in Z-axis. **/
-  double ang;
+  double ang_z;
 
-  Commands() : lin_x(0.0), lin_y(0.0), ang(0.0) {}
+  Commands() : lin_x(0.0), lin_y(0.0), ang_z(0.0) {}
 };
 
 
