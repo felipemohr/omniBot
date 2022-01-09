@@ -47,7 +47,7 @@
 
   <gazebo>
     <plugin filename="libignition-gazebo-joint-state-publisher-system.so"
-          name="ignition::gazebo::systems::JointStatePublisher"/>
+            name="ignition::gazebo::systems::JointStatePublisher"/>
 
     <plugin
       filename="libignition-gazebo-diff-drive-system.so"

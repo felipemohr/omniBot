@@ -11,7 +11,11 @@ ign_find_package(ignition-gazebo${IGN_GAZEBO_VER} REQUIRED)
 
 add_library(OmniDrive SHARED OmniDrive.cc)
 
+set_property(TARGET OmniDrive PROPERTY CXX_STANDARD 17)
+
 install(TARGETS OmniDrive DESTINATION ${IGNITION_GAZEBO_PLUGIN_INSTALL_DIR})
+
+set(IGN_GAZEBO_SYSTEM_PLUGIN_PATH )
 
 target_link_libraries(OmniDrive
   PRIVATE ignition-common${IGN_COMMON_VER}::ignition-common${IGN_COMMON_VER}
