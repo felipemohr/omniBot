@@ -61,9 +61,12 @@
       <wheel_radius>0.039</wheel_radius>
     </plugin>
 
-    <plugin filename="libignition-gazebo-velocity-control-system.so"
+    <!-- <plugin filename="libignition-gazebo-velocity-control-system.so"
             name="ignition::gazebo::systems::VelocityControl">
-    </plugin>
+      <link_name>base_link</link_name>
+      <initial_linear>0 0 -9.8</initial_linear>
+      <initial_angular>0 0 0</initial_angular>
+    </plugin> -->
 
   </gazebo>
 

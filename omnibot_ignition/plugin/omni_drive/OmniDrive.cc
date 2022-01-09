@@ -151,7 +151,7 @@ void OmniDrive::Configure(const Entity &_entity,
 
 //////////////////////////////////////////////////
 void OmniDrive::PreUpdate(const ignition::gazebo::UpdateInfo &_info,
-    ignition::gazebo::EntityComponentManager &_ecm)
+                          ignition::gazebo::EntityComponentManager &_ecm)
 {
   IGN_PROFILE("OmniDrive::PreUpdate");
 
@@ -299,6 +299,35 @@ void OmniDrive::PreUpdate(const ignition::gazebo::UpdateInfo &_info,
   auto rearRightPos = _ecm.Component<components::JointPosition>(this->dataPtr->rearRightJoint);
   if (!rearRightPos && _ecm.HasEntity(this->dataPtr->rearRightJoint))
     _ecm.CreateComponent(this->dataPtr->rearRightJoint, components::JointPosition());
+
+  // Update robot velocity
+  this->dataPtr->referenceLinkName = "base_link";
+  this->dataPtr->referenceLink = this->dataPtr->model.LinkByName(_ecm, this->dataPtr->referenceLinkName);
+
+  math::Vector3d linearVel{this->dataPtr->targetVel.linear().x(), this->dataPtr->targetVel.linear().y(), -9.8};
+  math::Vector3d angularVel{0.0, 0.0, this->dataPtr->targetVel.angular().z()};
+
+  auto linkLinearVelComp = _ecm.Component<components::LinearVelocityCmd>(this->dataPtr->referenceLink);
+  if (!linkLinearVelComp)
+  {
+    _ecm.CreateComponent(this->dataPtr->referenceLink,
+        components::LinearVelocityCmd({linearVel}));
+  }
+  else
+  {
+    *linkLinearVelComp = components::LinearVelocityCmd(linearVel);
+  }
+
+  auto linkAngularVelComp = _ecm.Component<components::AngularVelocityCmd>(this->dataPtr->referenceLink);
+  if (!linkAngularVelComp)
+  {
+    _ecm.CreateComponent(this->dataPtr->referenceLink,
+        components::AngularVelocityCmd({angularVel}));
+  }
+  else
+  {
+    *linkAngularVelComp = components::AngularVelocityCmd(angularVel);
+  }
 
 }
 

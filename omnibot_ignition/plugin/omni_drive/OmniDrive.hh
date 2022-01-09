@@ -23,6 +23,8 @@
 #include "ignition/gazebo/components/CanonicalLink.hh"
 #include "ignition/gazebo/components/JointPosition.hh"
 #include "ignition/gazebo/components/JointVelocityCmd.hh"
+#include "ignition/gazebo/components/AngularVelocityCmd.hh"
+#include "ignition/gazebo/components/LinearVelocityCmd.hh"
 #include "ignition/gazebo/Link.hh"
 #include "ignition/gazebo/Model.hh"
 #include "ignition/gazebo/Util.hh"
@@ -180,6 +182,12 @@ namespace omni_drive
 
       /** @brief child_frame_id from sdf **/
       std::string sdfChildFrameId;
+
+
+
+      Entity referenceLink;
+
+      std::string referenceLinkName;
 
   };
 
