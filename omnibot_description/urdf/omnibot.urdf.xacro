@@ -52,6 +52,7 @@
     <plugin
       filename="libOmniDrive.so"
       name="omni_drive::OmniDrive">
+      <reference_frame>base_link</reference_frame>
       <front_left_joint>front_left_wheel_joint</front_left_joint>
       <rear_left_joint>back_left_wheel_joint</rear_left_joint>
       <front_right_joint>front_right_wheel_joint</front_right_joint>
@@ -60,13 +61,6 @@
       <wheel_right_left_separation>0.21</wheel_right_left_separation>
       <wheel_radius>0.039</wheel_radius>
     </plugin>
-
-    <!-- <plugin filename="libignition-gazebo-velocity-control-system.so"
-            name="ignition::gazebo::systems::VelocityControl">
-      <link_name>base_link</link_name>
-      <initial_linear>0 0 -9.8</initial_linear>
-      <initial_angular>0 0 0</initial_angular>
-    </plugin> -->
 
   </gazebo>
 

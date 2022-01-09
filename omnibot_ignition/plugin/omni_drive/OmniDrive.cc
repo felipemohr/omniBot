@@ -38,6 +38,11 @@ void OmniDrive::Configure(const Entity &_entity,
 
   // Get params from SDF
   sdf::ElementPtr sdfElem;
+
+  sdfElem = ptr->GetElement("reference_frame");
+  this->dataPtr->referenceFrameName = sdfElem->Get<std::string>();
+  this->dataPtr->referenceFrame = this->dataPtr->model.LinkByName(_ecm, this->dataPtr->referenceFrameName);
+
   sdfElem = ptr->GetElement("front_left_joint");
   this->dataPtr->frontLeftJointName = sdfElem->Get<std::string>();
 
@@ -301,16 +306,13 @@ void OmniDrive::PreUpdate(const ignition::gazebo::UpdateInfo &_info,
     _ecm.CreateComponent(this->dataPtr->rearRightJoint, components::JointPosition());
 
   // Update robot velocity
-  this->dataPtr->referenceLinkName = "base_link";
-  this->dataPtr->referenceLink = this->dataPtr->model.LinkByName(_ecm, this->dataPtr->referenceLinkName);
-
   math::Vector3d linearVel{this->dataPtr->targetVel.linear().x(), this->dataPtr->targetVel.linear().y(), -9.8};
   math::Vector3d angularVel{0.0, 0.0, this->dataPtr->targetVel.angular().z()};
 
-  auto linkLinearVelComp = _ecm.Component<components::LinearVelocityCmd>(this->dataPtr->referenceLink);
+  auto linkLinearVelComp = _ecm.Component<components::LinearVelocityCmd>(this->dataPtr->referenceFrame);
   if (!linkLinearVelComp)
   {
-    _ecm.CreateComponent(this->dataPtr->referenceLink,
+    _ecm.CreateComponent(this->dataPtr->referenceFrame,
         components::LinearVelocityCmd({linearVel}));
   }
   else
@@ -318,10 +320,10 @@ void OmniDrive::PreUpdate(const ignition::gazebo::UpdateInfo &_info,
     *linkLinearVelComp = components::LinearVelocityCmd(linearVel);
   }
 
-  auto linkAngularVelComp = _ecm.Component<components::AngularVelocityCmd>(this->dataPtr->referenceLink);
+  auto linkAngularVelComp = _ecm.Component<components::AngularVelocityCmd>(this->dataPtr->referenceFrame);
   if (!linkAngularVelComp)
   {
-    _ecm.CreateComponent(this->dataPtr->referenceLink,
+    _ecm.CreateComponent(this->dataPtr->referenceFrame,
         components::AngularVelocityCmd({angularVel}));
   }
   else

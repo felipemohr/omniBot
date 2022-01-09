@@ -83,6 +83,9 @@ namespace omni_drive
       /** @brief Ignition communication node **/
       transport::Node node;
 
+      /** @brief Entity of the robot reference link **/
+      Entity referenceFrame;
+      
       /** @brief Entity of the front left joint **/
       Entity frontLeftJoint;
 
@@ -94,6 +97,9 @@ namespace omni_drive
 
       /** @brief Entity of the rear right joint **/
       Entity rearRightJoint;
+
+      /** @brief Name of the robot reference link **/
+      std::string referenceFrameName;
 
       /** @brief Name of the front left joint **/
       std::string frontLeftJointName;
@@ -182,12 +188,6 @@ namespace omni_drive
 
       /** @brief child_frame_id from sdf **/
       std::string sdfChildFrameId;
-
-
-
-      Entity referenceLink;
-
-      std::string referenceLinkName;
 
   };
 
