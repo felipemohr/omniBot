@@ -5,26 +5,14 @@
 
 #include <ignition/gazebo/System.hh>
 
-#include <ignition/msgs/odometry.pb.h>
-
-#include <limits>
 #include <mutex>
-#include <set>
 #include <string>
-#include <vector>
 
 #include <ignition/common/Profiler.hh>
 #include <ignition/math/Angle.hh>
-#include <ignition/math/Quaternion.hh>
 #include <ignition/math/SpeedLimiter.hh>
-#include <ignition/plugin/Register.hh>
 #include <ignition/transport/Node.hh>
 
-#include "ignition/gazebo/components/CanonicalLink.hh"
-#include "ignition/gazebo/components/JointPosition.hh"
-#include "ignition/gazebo/components/JointVelocityCmd.hh"
-#include "ignition/gazebo/components/AngularVelocityCmd.hh"
-#include "ignition/gazebo/components/LinearVelocityCmd.hh"
 #include "ignition/gazebo/Link.hh"
 #include "ignition/gazebo/Model.hh"
 #include "ignition/gazebo/Util.hh"
@@ -182,12 +170,6 @@ namespace omni_drive
 
       /** @brief A muterx to protect the target velocity command **/
       std::mutex mutex;
-
-      /** @brief frame_id from sdf **/
-      std::string sdfFrameId;
-
-      /** @brief child_frame_id from sdf **/
-      std::string sdfChildFrameId;
 
   };
 

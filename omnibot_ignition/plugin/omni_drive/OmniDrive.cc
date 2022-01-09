@@ -1,5 +1,16 @@
 #include "OmniDrive.hh"
 
+#include <set>
+#include <vector>
+
+#include <ignition/plugin/Register.hh>
+
+#include "ignition/gazebo/components/CanonicalLink.hh"
+#include "ignition/gazebo/components/JointPosition.hh"
+#include "ignition/gazebo/components/JointVelocityCmd.hh"
+#include "ignition/gazebo/components/AngularVelocityCmd.hh"
+#include "ignition/gazebo/components/LinearVelocityCmd.hh"
+
 using namespace ignition;
 using namespace gazebo;
 using namespace omni_drive;
