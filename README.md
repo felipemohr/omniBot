@@ -26,5 +26,7 @@ $ . install/setup.bash
 ```
 
 Start the simulation:
-` $ ros2 launch omnibot_ignition start_simulation`
+`$ ros2 launch omnibot_ignition start_simulation.launch.py`
 
+If you want to run a teleoperation with a joystick, run:
+`$ ros2 launch omnibot_control joy_teleop.launch.py`

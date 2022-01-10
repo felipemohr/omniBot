@@ -8,7 +8,8 @@
   <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
-
+  
+  <exec_depend>ros2launch</exec_depend>
   <exec_depend>ros_ign_gazebo</exec_depend>
   <exec_depend>ros_ign_bridge</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
