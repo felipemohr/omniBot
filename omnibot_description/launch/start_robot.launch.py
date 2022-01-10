@@ -1,5 +1,4 @@
 import launch
-from launch import condition
 from launch.substitutions import Command, LaunchConfiguration
 from launch_ros.substitutions import FindPackageShare
 from launch.actions import TimerAction

@@ -19,12 +19,22 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(geometry_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 add_executable(test_vel_control src/test_vel_control.cpp)
+add_executable(joy_teleop src/JoyTeleop.cpp)
 
 ament_target_dependencies(test_vel_control rclcpp geometry_msgs)
+ament_target_dependencies(joy_teleop rclcpp geometry_msgs sensor_msgs)
 
-install(TARGETS test_vel_control
+include_directories(include)
+
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(TARGETS test_vel_control joy_teleop
         DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

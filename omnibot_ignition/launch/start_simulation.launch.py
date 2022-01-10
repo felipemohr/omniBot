@@ -1,9 +1,8 @@
 import launch
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import Command, LaunchConfiguration
+from launch.substitutions import LaunchConfiguration
 from launch_ros.substitutions import FindPackageShare
 from launch.actions import IncludeLaunchDescription
-from launch_ros.actions import Node
 import os
 
 def generate_launch_description():
