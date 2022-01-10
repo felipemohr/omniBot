@@ -155,12 +155,6 @@ void OmniDrive::Configure(const Entity &_entity,
   this->dataPtr->tfPub = this->dataPtr->node.Advertise<msgs::Pose_V>(
       tfTopic);
 
-  if (_sdf->HasElement("frame_id"))
-    this->dataPtr->sdfFrameId = _sdf->Get<std::string>("frame_id");
-
-  if (_sdf->HasElement("child_frame_id"))
-    this->dataPtr->sdfChildFrameId = _sdf->Get<std::string>("child_frame_id");
-
   ignmsg << "OmniDrive subscribing to twist messages on [" << topic << "]"
          << std::endl;
 }
@@ -317,8 +311,8 @@ void OmniDrive::PreUpdate(const ignition::gazebo::UpdateInfo &_info,
     _ecm.CreateComponent(this->dataPtr->rearRightJoint, components::JointPosition());
 
   // Update robot velocity
-  math::Vector3d linearVel{this->dataPtr->targetVel.linear().x(), this->dataPtr->targetVel.linear().y(), -9.8};
-  math::Vector3d angularVel{0.0, 0.0, this->dataPtr->targetVel.angular().z()};
+  math::Vector3d linearVel{this->dataPtr->targetLinVelX, this->dataPtr->targetLinVelY, -9.8};
+  math::Vector3d angularVel{0.0, 0.0, this->dataPtr->targetAngVelZ};
 
   auto linkLinearVelComp = _ecm.Component<components::LinearVelocityCmd>(this->dataPtr->referenceFrame);
   if (!linkLinearVelComp)
@@ -364,35 +358,32 @@ void OmniDrivePrivate::UpdateVelocity(const ignition::gazebo::UpdateInfo &_info,
 {
   IGN_PROFILE("OmniDrive::UpdateVelocity");
 
-  double linVelX;
-  double linVelY;
-  double angVelZ;
   {
     std::lock_guard<std::mutex> lock(this->mutex);
-    linVelX = this->targetVel.linear().x();
-    linVelY = this->targetVel.linear().y();
-    angVelZ = this->targetVel.angular().z();
+    this->targetLinVelX = this->targetVel.linear().x();
+    this->targetLinVelY = this->targetVel.linear().y();
+    this->targetAngVelZ = this->targetVel.angular().z();
   }
 
   // Limit the target velocity if needed.
   this->limiterLin->Limit(
-      linVelX, this->last0Cmd.lin_x, this->last1Cmd.lin_x, _info.dt);
+      this->targetLinVelX, this->last0Cmd.lin_x, this->last1Cmd.lin_x, _info.dt);
   this->limiterLin->Limit(
-      linVelY, this->last0Cmd.lin_y, this->last1Cmd.lin_y, _info.dt);
+      this->targetLinVelY, this->last0Cmd.lin_y, this->last1Cmd.lin_y, _info.dt);
   this->limiterAng->Limit(
-      angVelZ, this->last0Cmd.ang_z, this->last1Cmd.ang_z, _info.dt);
+      this->targetAngVelZ, this->last0Cmd.ang_z, this->last1Cmd.ang_z, _info.dt);
 
   // Update history of commands.
   this->last1Cmd = last0Cmd;
-  this->last0Cmd.lin_x = linVelX;
-  this->last0Cmd.lin_y = linVelY;
-  this->last0Cmd.ang_z = angVelZ;
+  this->last0Cmd.lin_x = this->targetLinVelX;
+  this->last0Cmd.lin_y = this->targetLinVelY;
+  this->last0Cmd.ang_z = this->targetAngVelZ;
 
   // Convert the target velocities to joint velocities.
-  this->frontLeftJointSpeed  = (1/this->wheelRadius) * (linVelX - linVelY + this->wheelCenterSeparation*( sin( 3*M_PI_4 - this->alphaFrontLeftWheel ) / sin(-M_PI_4) )*angVelZ);
-  this->frontRightJointSpeed = (1/this->wheelRadius) * (linVelX + linVelY + this->wheelCenterSeparation*( sin(-3*M_PI_4 - this->alphaFrontRightWheel) / sin( M_PI_4) )*angVelZ);
-  this->rearLeftJointSpeed   = (1/this->wheelRadius) * (linVelX + linVelY + this->wheelCenterSeparation*( sin( M_PI_4   - this->alphaRearLeftWheel  ) / sin( M_PI_4) )*angVelZ);
-  this->rearRightJointSpeed  = (1/this->wheelRadius) * (linVelX - linVelY + this->wheelCenterSeparation*( sin(-M_PI_4   - this->alphaRearRightWheel ) / sin(-M_PI_4) )*angVelZ);
+  this->frontLeftJointSpeed  = (1/this->wheelRadius) * (this->targetLinVelX - this->targetLinVelY + this->wheelCenterSeparation*( sin( 3*M_PI_4 - this->alphaFrontLeftWheel ) / sin(-M_PI_4) )*this->targetAngVelZ);
+  this->frontRightJointSpeed = (1/this->wheelRadius) * (this->targetLinVelX + this->targetLinVelY + this->wheelCenterSeparation*( sin(-3*M_PI_4 - this->alphaFrontRightWheel) / sin( M_PI_4) )*this->targetAngVelZ);
+  this->rearLeftJointSpeed   = (1/this->wheelRadius) * (this->targetLinVelX + this->targetLinVelY + this->wheelCenterSeparation*( sin( M_PI_4   - this->alphaRearLeftWheel  ) / sin( M_PI_4) )*this->targetAngVelZ);
+  this->rearRightJointSpeed  = (1/this->wheelRadius) * (this->targetLinVelX - this->targetLinVelY + this->wheelCenterSeparation*( sin(-M_PI_4   - this->alphaRearRightWheel ) / sin(-M_PI_4) )*this->targetAngVelZ);
 
 }
 

@@ -60,6 +60,8 @@
       <wheel_front_rear_separation>0.12</wheel_front_rear_separation>
       <wheel_right_left_separation>0.21</wheel_right_left_separation>
       <wheel_radius>0.039</wheel_radius>
+      <min_velocity>-1.0</min_velocity>
+      <max_velocity>1.0</max_velocity>
     </plugin>
 
   </gazebo>

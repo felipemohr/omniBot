@@ -164,6 +164,15 @@ namespace omni_drive
 
       /** @brief Last target velocity requested **/
       msgs::Twist targetVel;
+      
+      /** @brief Target linear velocity in X-axis **/
+      double targetLinVelX;
+      
+      /** @brief Target linear velocity in Y-axis **/
+      double targetLinVelY;
+      
+      /** @brief Target angular velocity in Z-axis **/
+      double targetAngVelZ;
 
       /** @brief Enable/disable state of the controller **/
       bool enabled;
