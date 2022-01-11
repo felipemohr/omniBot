@@ -32,7 +32,7 @@ def generate_launch_description():
       {"increase_angular_key": "KEY.RIGHT"},
       {"decrease_angular_key":  "KEY.LEFT"},
       {"scale_linear":                 1.0},
-      {"scale_angular":                5.0}
+      {"scale_angular":                2.0}
     ]
   )
 

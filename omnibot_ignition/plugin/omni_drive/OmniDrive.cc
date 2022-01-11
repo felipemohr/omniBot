@@ -86,29 +86,45 @@ void OmniDrive::Configure(const Entity &_entity,
   this->dataPtr->limiterAng = std::make_unique<ignition::math::SpeedLimiter>();
 
   // Parse speed limiter parameters.
-  if (_sdf->HasElement("min_velocity"))
+  if (_sdf->HasElement("min_velocity_linear"))
   {
-    const double minVel = _sdf->Get<double>("min_velocity");
-    this->dataPtr->limiterLin->SetMinVelocity(minVel);
-    this->dataPtr->limiterAng->SetMinVelocity(minVel);
+    const double minVelLin = _sdf->Get<double>("min_velocity_linear");
+    this->dataPtr->limiterLin->SetMinVelocity(minVelLin);
   }
-  if (_sdf->HasElement("max_velocity"))
+  if (_sdf->HasElement("max_velocity_linear"))
   {
-    const double maxVel = _sdf->Get<double>("max_velocity");
-    this->dataPtr->limiterLin->SetMaxVelocity(maxVel);
-    this->dataPtr->limiterAng->SetMaxVelocity(maxVel);
+    const double maxVelLin = _sdf->Get<double>("max_velocity_linear");
+    this->dataPtr->limiterLin->SetMaxVelocity(maxVelLin);
   }
-  if (_sdf->HasElement("min_acceleration"))
+  if (_sdf->HasElement("min_velocity_angular"))
   {
-    const double minAccel = _sdf->Get<double>("min_acceleration");
-    this->dataPtr->limiterLin->SetMinAcceleration(minAccel);
-    this->dataPtr->limiterAng->SetMinAcceleration(minAccel);
+    const double minVelAng = _sdf->Get<double>("min_velocity_linear");
+    this->dataPtr->limiterAng->SetMinVelocity(minVelAng);
   }
-  if (_sdf->HasElement("max_acceleration"))
+  if (_sdf->HasElement("max_velocity_angular"))
   {
-    const double maxAccel = _sdf->Get<double>("max_acceleration");
-    this->dataPtr->limiterLin->SetMaxAcceleration(maxAccel);
-    this->dataPtr->limiterAng->SetMaxAcceleration(maxAccel);
+    const double maxVelAng = _sdf->Get<double>("max_velocity_linear");
+    this->dataPtr->limiterAng->SetMaxVelocity(maxVelAng);
+  }
+  if (_sdf->HasElement("min_acceleration_linear"))
+  {
+    const double minAccelLin = _sdf->Get<double>("min_acceleration_linear");
+    this->dataPtr->limiterLin->SetMinAcceleration(minAccelLin);
+  }
+  if (_sdf->HasElement("max_acceleration_linear"))
+  {
+    const double maxAccelLin = _sdf->Get<double>("max_acceleration_linear");
+    this->dataPtr->limiterLin->SetMaxAcceleration(maxAccelLin);
+  }
+  if (_sdf->HasElement("min_acceleration_angular"))
+  {
+    const double minAccelAng = _sdf->Get<double>("min_acceleration_angular");
+    this->dataPtr->limiterAng->SetMinAcceleration(minAccelAng);
+  }
+  if (_sdf->HasElement("max_acceleration_angular"))
+  {
+    const double maxAccelAng = _sdf->Get<double>("max_acceleration_angular");
+    this->dataPtr->limiterAng->SetMaxAcceleration(maxAccelAng);
   }
   if (_sdf->HasElement("min_jerk"))
   {
