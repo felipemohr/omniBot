@@ -17,18 +17,16 @@ except ImportError as e:
 class KeyboardInterface(Node):
 
   def __init__(self):
-    super().__init__('keyboard_interface')
+    super().__init__('keyboard_node')
     self.keys_publisher_ = self.create_publisher(Keys, '/keys', 10)
     self.key_event_publisher_ = self.create_publisher(KeyEvent, '/key_event', 10)
 
     self.sticky_buttons = self.declare_parameter('sticky_buttons', False).get_parameter_value().bool_value
     self.keys_publish_rate = self.declare_parameter('keys_publish_rate', 10.0).get_parameter_value().double_value
 
-    # self.sticky_buttons = self.get_parameter('sticky_buttons').get_parameter_value().bool_value
-    # self.keys_publish_rate = self.get_parameter('keys_publish_rate').get_parameter_value().double_value
-
     self.keys_msg = Keys()
     self.timer = self.create_timer(1/self.keys_publish_rate, self.timerCallback)
+    self.get_logger().info("Initializing keyboard listener...")
     listener = Listener(on_press=self.onPress, on_release=self.onRelease)
     listener.start()
   
@@ -36,7 +34,7 @@ class KeyboardInterface(Node):
     self.keys_publisher_.publish(self.keys_msg)
 
   def onRelease(self, key):
-    key = str(key).upper()
+    key = str(key).upper().replace("'", "")
     key_event_msg = KeyEvent()
     key_event_msg.event = KeyEvent.RELEASED
     key_event_msg.key = key
@@ -46,9 +44,8 @@ class KeyboardInterface(Node):
       if key in self.keys_msg.pressed_keys:
         self.keys_msg.pressed_keys.remove(key)
 
-
   def onPress(self, key):
-    key = str(key).upper()
+    key = str(key).upper().replace("'", "")
     key_event_msg = KeyEvent()
     key_event_msg.event = KeyEvent.PRESSED
     key_event_msg.key = key
@@ -72,4 +69,3 @@ def main(args=None):
 
 if __name__ == '__main__':
   main()
-

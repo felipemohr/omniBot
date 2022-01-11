@@ -30,7 +30,7 @@ def generate_launch_description():
       {"axis_linear_y":  0},
       {"axis_angular":   3},
       {"scale_linear":  1.0},
-      {"scale_angular": 1.0}
+      {"scale_angular": 2.0}
     ]
   )
 
