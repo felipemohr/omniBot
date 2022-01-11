@@ -30,3 +30,6 @@ Start the simulation:
 
 If you want to run a teleoperation with a joystick, run:
 `$ ros2 launch omnibot_control joy_teleop.launch.py`
+
+If you want to run a teleoperation with your keyboard, run:
+`$ ros2 run teleop_twist_keyboard teleop_twist_keyboard`
