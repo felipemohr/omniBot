@@ -37,12 +37,25 @@ KeyboardTeleop::KeyboardTeleop() : Node("keyboard_teleop")
   _k_lin = 0.5;
   _k_ang = 0.5;
 
+  std::string msg = 
+    "\n\nReading from the keyboard  and Publishing to Twist!\n"
+    "---------------------------\n"
+    "Moving around:\n"
+    "   q  w  e\n"
+    " a    s    d\n"
+    "left Shift : 100% of max speed\n"
+    "left Alt : 25% of max speed\n"
+    "right/left arrows : increase/decrease linear speed by 10%\n"
+    "up/down arrows : increase/decrease linear speed by 10%\n"
+    "CTRL-C to exit\n";
+
+  RCLCPP_INFO(this->get_logger(), "%s", msg.c_str());
+
 }
 
 KeyboardTeleop::~KeyboardTeleop()
 {
 }
-
 
 void KeyboardTeleop::keysCallback(const keyboard_interface::msg::Keys::SharedPtr msg)
 {

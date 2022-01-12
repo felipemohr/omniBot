@@ -13,7 +13,6 @@ public:
 private:
   void joyCallback(const sensor_msgs::msg::Joy::SharedPtr msg);
   void publishVelocity();
-  void loadParameters();
 
   rclcpp::TimerBase::SharedPtr _timer;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr _vel_publisher;

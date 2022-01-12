@@ -17,38 +17,22 @@ JoyTeleop::JoyTeleop() : Node("joy_teleop")
 
   _timer = this->create_wall_timer( 50ms, std::bind(&JoyTeleop::publishVelocity, this) );
 
-  this->declare_parameter<int>("reverse_button", 10);
-  this->declare_parameter<int>("stop_button1",   4);
-  this->declare_parameter<int>("stop_button2",   5);
-  this->declare_parameter<int>("turbo_button",   2);
-  this->declare_parameter<int>("slow_button",    3);
-  this->declare_parameter<int>("axis_linear_x",  1);
-  this->declare_parameter<int>("axis_linear_y",  0);
-  this->declare_parameter<int>("axis_angular",   3);
-  this->declare_parameter<double>("scale_linear",  1.0);
-  this->declare_parameter<double>("scale_angular", 1.0);
+  _reverse     = this->declare_parameter<int>("reverse_button", 10);
+  _stop1       = this->declare_parameter<int>("stop_button1",   4);
+  _stop2       = this->declare_parameter<int>("stop_button2",   5);
+  _turbo       = this->declare_parameter<int>("turbo_button",   2);
+  _slow        = this->declare_parameter<int>("slow_button",    3);
+  _linear_x    = this->declare_parameter<int>("axis_linear_x",  1);
+  _linear_y    = this->declare_parameter<int>("axis_linear_y",  0);
+  _angular     = this->declare_parameter<int>("axis_angular",   3);
+  _lin_scale   = this->declare_parameter<double>("scale_linear",  1.0);
+  _ang_scale   = this->declare_parameter<double>("scale_angular", 1.0);
 
-  this->loadParameters();
+  _rev = true;
 }
 
 JoyTeleop::~JoyTeleop()
 {
-}
-
-void JoyTeleop::loadParameters()
-{
-  this->get_parameter("reverse_button", _reverse);
-  this->get_parameter("stop_button1",   _stop1);
-  this->get_parameter("stop_button2",   _stop2);
-  this->get_parameter("turbo_button",   _turbo);
-  this->get_parameter("slow_button",    _slow);
-  this->get_parameter("axis_linear_x",  _linear_x);
-  this->get_parameter("axis_linear_y",  _linear_y);
-  this->get_parameter("axis_angular",   _angular);
-  this->get_parameter("scale_linear",   _lin_scale);
-  this->get_parameter("scale_angular",  _ang_scale);
-
-  _rev = true;
 }
 
 void JoyTeleop::joyCallback(const sensor_msgs::msg::Joy::SharedPtr msg)
