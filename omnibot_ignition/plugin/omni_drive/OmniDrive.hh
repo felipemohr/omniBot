@@ -17,6 +17,9 @@
 #include "ignition/gazebo/Model.hh"
 #include "ignition/gazebo/Util.hh"
 
+#include "OmniDriveOdometry.hh"
+
+
 /** @brief Velocity command. **/
 struct Commands
 {
@@ -58,6 +61,15 @@ namespace omni_drive
        * @param _msg Boolean message.
        */
       void OnEnable(const ignition::msgs::Boolean &_msg);
+
+      /**
+       * @brief Update odometry and publish an odometry message.
+       * 
+       * @param _info System update information.
+       * @param _ecm The EntityComponentManager of the given simulation instante.
+       */
+      void UpdateOdometry(const ignition::gazebo::UpdateInfo &_info,
+                          const ignition::gazebo::EntityComponentManager &_ecm);
 
       /**
        * @brief Update linear and angular velocities.
@@ -146,6 +158,18 @@ namespace omni_drive
 
       /** @brief The model's canonical link **/
       Link canonicalLink{kNullEntity};
+
+      /** \brief Update period calculated from <odom__publish_frequency>. **/
+      std::chrono::steady_clock::duration odomPubPeriod{0};
+
+      /** \brief Last sim time odom was published. **/
+      std::chrono::steady_clock::duration lastOdomPubTime{0};
+
+      /** \brief Diff drive odometry. **/
+      math::OmniDriveOdometry odom;
+
+      /** \brief Omni drive odometry message publisher. **/
+      transport::Node::Publisher odomPub;
 
       /** @brief Omni drive tf message publisher **/
       transport::Node::Publisher tfPub;

@@ -3,6 +3,8 @@
 #include <set>
 #include <vector>
 
+#include <ignition/msgs/odometry.pb.h>
+
 #include <ignition/plugin/Register.hh>
 
 #include "ignition/gazebo/components/CanonicalLink.hh"
