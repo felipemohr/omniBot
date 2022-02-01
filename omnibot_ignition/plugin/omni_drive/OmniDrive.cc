@@ -198,6 +198,12 @@ void OmniDrive::Configure(const Entity &_entity,
   this->dataPtr->tfPub = this->dataPtr->node.Advertise<msgs::Pose_V>(
       tfTopic);
 
+  if (_sdf->HasElement("frame_id"))
+    this->dataPtr->sdfFrameId = _sdf->Get<std::string>("frame_id");
+
+  if (_sdf->HasElement("child_frame_id"))
+    this->dataPtr->sdfChildFrameId = _sdf->Get<std::string>("child_frame_id");
+
   ignmsg << "OmniDrive subscribing to twist messages on [" << topic << "]"
          << std::endl;
 }
@@ -400,7 +406,7 @@ void OmniDrive::PostUpdate(const UpdateInfo &_info,
 void OmniDrivePrivate::UpdateOdometry(const ignition::gazebo::UpdateInfo &_info,
                                       const ignition::gazebo::EntityComponentManager &_ecm)
 {
-  IGN_PROFILE("DiffDrive::UpdateOdometry");
+  IGN_PROFILE("OmniDrive::UpdateOdometry");
   // Initialize, if not already initialized.
   if (!this->odom.Initialized())
   {
@@ -408,9 +414,89 @@ void OmniDrivePrivate::UpdateOdometry(const ignition::gazebo::UpdateInfo &_info,
     return;
   }
 
-  if (this->leftJoints.empty() || this->rightJoints.empty())
+  if (!this->frontLeftJoint || !this->rearLeftJoint || !frontRightJoint || !rearRightJoint)
     return;
 
+  // Get the joint positions
+  auto frontLeftJointPos  = _ecm.Component<components::JointPosition>(this->frontLeftJoint);
+  auto rearLeftJointPos   = _ecm.Component<components::JointPosition>(this->rearLeftJoint);
+  auto frontRightJointPos = _ecm.Component<components::JointPosition>(this->frontRightJoint);
+  auto rearRightJointPos  = _ecm.Component<components::JointPosition>(this->rearRightJoint);
+
+  // Abort if the joints were not found or just created.
+  if (!frontLeftJointPos || !rearLeftJointPos || !frontRightJointPos || !rearRightJointPos ||
+      frontLeftJointPos->Data().empty() || rearLeftJointPos->Data().empty() || 
+      frontRightJointPos->Data().empty() || rearRightJointPos->Data().empty())
+  {
+    return;
+  }
+
+  this->odom.Update(frontLeftJointPos->Data()[0], rearLeftJointPos->Data()[0],
+                    frontRightJointPos->Data()[0], rearRightJointPos->Data()[0],
+                    std::chrono::steady_clock::time_point(_info.simTime));
+  
+  // Throttle publishing
+  auto omni = _info.simTime - this->lastOdomPubTime;
+  if (omni > std::chrono::steady_clock::duration::zero() &&
+      omni < this->odomPubPeriod)
+  {
+    return;
+  }
+  this->lastOdomPubTime = _info.simTime;
+
+  // Construct the odometry message and publish it.
+  msgs::Odometry msg;
+  msg.mutable_pose()->mutable_position()->set_x(this->odom.X());
+  msg.mutable_pose()->mutable_position()->set_y(this->odom.Y());
+
+  math::Quaterniond orientation(0, 0, *this->odom.Heading());
+  msgs::Set(msg.mutable_pose()->mutable_orientation(), orientation);
+
+  msg.mutable_twist()->mutable_linear()->set_x(this->odom.LinearVelocity());
+  msg.mutable_twist()->mutable_angular()->set_z(*this->odom.AngularVelocity());
+
+  // Set the time stamp in the header
+  msg.mutable_header()->mutable_stamp()->CopyFrom(convert<msgs::Time>(_info.simTime));
+
+  // Set the frame id.
+  auto frame = msg.mutable_header()->add_data();
+  frame->set_key("frame_id");
+  if (this->sdfFrameId.empty())
+  {
+    frame->add_value(this->model.Name(_ecm) + "/odom");
+  }
+  else
+  {
+    frame->add_value(this->sdfFrameId);
+  }
+
+  std::optional<std::string> linkName = this->canonicalLink.Name(_ecm);
+  if (this->sdfChildFrameId.empty())
+  {
+    if (linkName)
+    {
+      auto childFrame = msg.mutable_header()->add_data();
+      childFrame->set_key("child_frame_id");
+      childFrame->add_value(this->model.Name(_ecm) + "/" + *linkName);
+    }
+  }
+  else
+  {
+    auto childFrame = msg.mutable_header()->add_data();
+    childFrame->set_key("child_frame_id");
+    childFrame->add_value(this->sdfChildFrameId);
+  }
+
+  // Construct the Pose_V/tf message and publish it.
+  msgs::Pose_V tfMsg;
+  ignition::msgs::Pose *tfMsgPose = tfMsg.add_pose();
+  tfMsgPose->mutable_header()->CopyFrom(*msg.mutable_header());
+  tfMsgPose->mutable_position()->CopyFrom(msg.mutable_pose()->position());
+  tfMsgPose->mutable_orientation()->CopyFrom(msg.mutable_pose()->orientation());
+
+  // Publish the messages
+  this->odomPub.Publish(msg);
+  this->tfPub.Publish(tfMsg);
 
 }
 

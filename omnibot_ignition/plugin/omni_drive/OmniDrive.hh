@@ -10,6 +10,7 @@
 
 #include <ignition/common/Profiler.hh>
 #include <ignition/math/Angle.hh>
+#include <ignition/math/Quaternion.hh>
 #include <ignition/math/SpeedLimiter.hh>
 #include <ignition/transport/Node.hh>
 
@@ -203,6 +204,12 @@ namespace omni_drive
 
       /** @brief A muterx to protect the target velocity command **/
       std::mutex mutex;
+
+      /** \brief frame_id from sdf. **/
+      std::string sdfFrameId;
+
+      /** \brief child_frame_id from sdf. **/
+      std::string sdfChildFrameId;
 
   };
 

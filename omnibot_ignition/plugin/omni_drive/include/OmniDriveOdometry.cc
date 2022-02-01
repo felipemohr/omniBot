@@ -102,16 +102,17 @@ bool OmniDriveOdometry::Initialized() const
 }
 
 //////////////////////////////////////////////////
-bool OmniDriveOdometry::Update(const Angle &_leftPos, const Angle &_rightPos,
-                      const clock::time_point &_time)
+bool OmniDriveOdometry::Update(const Angle &_frontLeftPos, const Angle &_rearLeftPos,
+                               const Angle &_frontRightPos, const Angle &_rearRightPos,
+                               const clock::time_point &_time)
 {
   // Compute x, y and heading using velocity
   const std::chrono::duration<double> dt =
     _time - this->dataPtr->lastUpdateTime;
 
   // Get current wheel joint positions:
-  const double leftWheelCurPos = *_leftPos * this->dataPtr->wheelRadius;
-  const double rightWheelCurPos = *_rightPos * this->dataPtr->wheelRadius;
+  const double leftWheelCurPos = *_frontLeftPos * this->dataPtr->wheelRadius;
+  const double rightWheelCurPos = *_frontRightPos * this->dataPtr->wheelRadius;
 
   // Estimate velocity of wheels using old and current position:
   const double leftWheelEstVel = leftWheelCurPos -
