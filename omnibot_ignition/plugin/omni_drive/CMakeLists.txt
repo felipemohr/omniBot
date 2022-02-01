@@ -9,7 +9,7 @@ ign_find_package(ignition-plugin${IGN_PLUGIN_VER} REQUIRED COMPONENTS register)
 set(IGN_GAZEBO_VER 3)
 ign_find_package(ignition-gazebo${IGN_GAZEBO_VER} REQUIRED)
 
-add_library(OmniDrive SHARED OmniDrive.cc)
+add_library(OmniDrive SHARED OmniDrive.cc include/OmniDriveOdometry.cc)
 
 install(TARGETS OmniDrive DESTINATION ${IGNITION_GAZEBO_PLUGIN_INSTALL_DIR})
 
