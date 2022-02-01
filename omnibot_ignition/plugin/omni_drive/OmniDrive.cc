@@ -141,6 +141,19 @@ void OmniDrive::Configure(const Entity &_entity,
     this->dataPtr->limiterAng->SetMaxJerk(maxJerk);
   }
 
+  double odomFreq = _sdf->Get<double>("odom_publish_frequency", 50).first;
+  if (odomFreq > 0)
+  {
+    std::chrono::duration<double> odomPer{1 / odomFreq};
+    this->dataPtr->odomPubPeriod =
+      std::chrono::duration_cast<std::chrono::steady_clock::duration>(odomPer);
+  }
+
+  // Setup odometry.
+  this->dataPtr->odom.SetWheelParams(this->dataPtr->wheelRightLeftSeparation,
+                                     this->dataPtr->wheelFrontRearSeparation,
+                                     this->dataPtr->wheelRadius);
+
   // Subscribe to commands
   std::vector<std::string> topics;
   if (_sdf->HasElement("topic"))
@@ -165,6 +178,18 @@ void OmniDrive::Configure(const Entity &_entity,
         this->dataPtr.get());
   }
   this->dataPtr->enabled = true;
+
+  std::vector<std::string> odomTopics;
+  if (_sdf->HasElement("odom_topic"))
+  {
+    odomTopics.push_back(_sdf->Get<std::string>("odom_topic"));
+  }
+  odomTopics.push_back("/model/" + this->dataPtr->model.Name(_ecm) +
+      "/odometry");
+  auto odomTopic = validTopic(odomTopics);
+
+  this->dataPtr->odomPub = this->dataPtr->node.Advertise<msgs::Odometry>(
+      odomTopic);
 
   std::string tfTopic{"/model/" + this->dataPtr->model.Name(_ecm) +
     "/tf"};
@@ -367,6 +392,25 @@ void OmniDrive::PostUpdate(const UpdateInfo &_info,
     return;
 
   this->dataPtr->UpdateVelocity(_info, _ecm);
+  this->dataPtr->UpdateOdometry(_info, _ecm);
+
+}
+
+//////////////////////////////////////////////////
+void OmniDrivePrivate::UpdateOdometry(const ignition::gazebo::UpdateInfo &_info,
+                                      const ignition::gazebo::EntityComponentManager &_ecm)
+{
+  IGN_PROFILE("DiffDrive::UpdateOdometry");
+  // Initialize, if not already initialized.
+  if (!this->odom.Initialized())
+  {
+    this->odom.Init(std::chrono::steady_clock::time_point(_info.simTime));
+    return;
+  }
+
+  if (this->leftJoints.empty() || this->rightJoints.empty())
+    return;
+
 
 }
 

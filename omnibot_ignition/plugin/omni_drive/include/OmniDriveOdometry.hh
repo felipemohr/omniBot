@@ -110,11 +110,11 @@ namespace ignition
       public: const Angle &AngularVelocity() const;
 
       /// \brief Set the wheel parameters including the radius and separation.
-      /// \param[in] _wheelSeparation Distance between left and right wheels.
-      /// \param[in] _leftWheelRadius Radius of the left wheel.
-      /// \param[in] _rightWheelRadius Radius of the right wheel.
-      public: void SetWheelParams(double _wheelSeparation,
-                      double _leftWheelRadius, double _rightWheelRadius);
+      /// \param[in] _wheelRightLeftSeparation Distance between left and right wheels.
+      /// \param[in] _wheelFrontRearSeparation Radius of the left wheel.
+      /// \param[in] _wheelRadius Radius of the right wheel.
+      public: void SetWheelParams(double _wheelRightLeftSeparation,
+                      double _wheelFrontRearSeparation, double _wheelRadius);
 
       /// \brief Set the velocity rolling window size.
       /// \param[in] _size The Velocity rolling window size.

@@ -39,14 +39,14 @@ class ignition::math::OmniDriveOdometryPrivate
   /// \brief Current angular velocity in radians/second.
   public: Angle angularVel;
 
-  /// \brief Left wheel radius in meters.
-  public: double leftWheelRadius{0.0};
+  /// \brief Wheel radius in meters.
+  public: double wheelRadius{0.2};
+      
+  /// \brief Distance between right and left wheels in meters.
+  public: double wheelRightLeftSeparation{1.0};
 
-  /// \brief Right wheel radius in meters.
-  public: double rightWheelRadius{0.0};
-
-  /// \brief Wheel separation in meters.
-  public: double wheelSeparation{1.0};
+  /// \brief Distance between front and rear wheels in meters.
+  public: double wheelFrontRearSeparation{1.0};
 
   /// \brief Previous left wheel position/state in radians.
   public: double leftWheelOldPos{0.0};
@@ -110,8 +110,8 @@ bool OmniDriveOdometry::Update(const Angle &_leftPos, const Angle &_rightPos,
     _time - this->dataPtr->lastUpdateTime;
 
   // Get current wheel joint positions:
-  const double leftWheelCurPos = *_leftPos * this->dataPtr->leftWheelRadius;
-  const double rightWheelCurPos = *_rightPos * this->dataPtr->rightWheelRadius;
+  const double leftWheelCurPos = *_leftPos * this->dataPtr->wheelRadius;
+  const double rightWheelCurPos = *_rightPos * this->dataPtr->wheelRadius;
 
   // Estimate velocity of wheels using old and current position:
   const double leftWheelEstVel = leftWheelCurPos -
@@ -127,7 +127,7 @@ bool OmniDriveOdometry::Update(const Angle &_leftPos, const Angle &_rightPos,
   // Compute linear and angular diff
   const double linear = (rightWheelEstVel + leftWheelEstVel) * 0.5;
   const double angular = (rightWheelEstVel - leftWheelEstVel) /
-    this->dataPtr->wheelSeparation;
+    this->dataPtr->wheelFrontRearSeparation;
 
   this->dataPtr->IntegrateExact(linear, angular);
 
@@ -149,12 +149,13 @@ bool OmniDriveOdometry::Update(const Angle &_leftPos, const Angle &_rightPos,
 }
 
 //////////////////////////////////////////////////
-void OmniDriveOdometry::SetWheelParams(double _wheelSeparation,
-    double _leftWheelRadius, double _rightWheelRadius)
+void OmniDriveOdometry::SetWheelParams(double _wheelRightLeftSeparation,
+                                       double _wheelFrontRearSeparation, 
+                                       double _wheelRadius)
 {
-  this->dataPtr->wheelSeparation = _wheelSeparation;
-  this->dataPtr->leftWheelRadius = _leftWheelRadius;
-  this->dataPtr->rightWheelRadius = _rightWheelRadius;
+  this->dataPtr->wheelRightLeftSeparation = _wheelRightLeftSeparation;
+  this->dataPtr->wheelFrontRearSeparation = _wheelFrontRearSeparation;
+  this->dataPtr->wheelRadius = _wheelRadius;
 }
 
 //////////////////////////////////////////////////
