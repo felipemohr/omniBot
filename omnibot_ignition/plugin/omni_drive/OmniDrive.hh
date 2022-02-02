@@ -3,10 +3,12 @@
 
 #include <memory>
 
-#include <ignition/gazebo/System.hh>
-
 #include <mutex>
 #include <string>
+
+#include <Eigen/Eigen>
+
+#include <ignition/gazebo/System.hh>
 
 #include <ignition/common/Profiler.hh>
 #include <ignition/math/Angle.hh>
@@ -135,24 +137,8 @@ namespace omni_drive
       /** @brief Distance between front and rear wheels **/
       double wheelFrontRearSeparation{1.0};
 
-      /** @brief Distance center of robot and center of the wheels **/
-      double wheelCenterSeparation;
-
-      /** @brief Angle between center of robot and center of the
-       * front left wheel, relative to robot X-axis **/
-      double alphaFrontLeftWheel;
-
-      /** @brief Angle between center of robot and center of the
-       * front right wheelm, relative to robot X-axis **/
-      double alphaFrontRightWheel;
-
-      /** @brief Angle between center of robot and center of the
-       * rear left wheel, relative to robot X-axis **/
-      double alphaRearLeftWheel;
-
-      /** @brief Angle between center of robot and center of the
-       * rear right wheel, relative to robot X-axis **/
-      double alphaRearRightWheel;
+      /** @brief Kinematics Matrix used for calculate wheel joint speeds **/
+      Eigen::MatrixXd kinematicsMatrix;
 
       /** @brief Model interface **/
       Model model{kNullEntity};

@@ -130,10 +130,10 @@ bool OmniDriveOdometry::Update(const Angle &_frontLeftPos, const Angle &_rearLef
     _time - this->dataPtr->lastUpdateTime;
 
   // Get current wheel joint positions:
-  const double frontLeftWheelCurPos  = *_frontLeftPos * this->dataPtr->wheelRadius;
-  const double rearLeftWheelCurPos   = *_rearLeftPos * this->dataPtr->wheelRadius;
-  const double frontRightWheelCurPos = *_frontRightPos * this->dataPtr->wheelRadius;
-  const double rearRightWheelCurPos  = *_rearRightPos * this->dataPtr->wheelRadius;
+  const double frontLeftWheelCurPos  = *_frontLeftPos  ;//* this->dataPtr->wheelRadius;
+  const double rearLeftWheelCurPos   = *_rearLeftPos   ;//* this->dataPtr->wheelRadius;
+  const double frontRightWheelCurPos = *_frontRightPos ;//* this->dataPtr->wheelRadius;
+  const double rearRightWheelCurPos  = *_rearRightPos  ;//* this->dataPtr->wheelRadius;
 
   // Estimate velocity of wheels using old and current position:
   const double frontLeftWheelEstVel = frontLeftWheelCurPos -
@@ -155,14 +155,14 @@ bool OmniDriveOdometry::Update(const Angle &_frontLeftPos, const Angle &_rearLef
   this->dataPtr->rearRightWheelOldPos  = rearRightWheelCurPos;
 
   // Compute linear and angular diff
-  const double linear_x = (frontLeftWheelEstVel + rearLeftWheelEstVel + 
-                           frontRightWheelEstVel + rearRightWheelEstVel) * 
+  const double linear_x = (frontLeftWheelEstVel + frontRightWheelEstVel + 
+                           rearLeftWheelEstVel + rearRightWheelEstVel) * 
                            (this->dataPtr->wheelRadius / 4);
-  const double linear_y = (-frontLeftWheelEstVel + rearLeftWheelEstVel + 
-                           frontRightWheelEstVel - rearRightWheelEstVel) * 
+  const double linear_y = (-frontLeftWheelEstVel + frontRightWheelEstVel + 
+                           rearLeftWheelEstVel - rearRightWheelEstVel) * 
                            (this->dataPtr->wheelRadius / 4);
-  const double angular  = (-frontLeftWheelEstVel + rearLeftWheelEstVel - 
-                           frontRightWheelEstVel + rearRightWheelEstVel) * 
+  const double angular  = (-frontLeftWheelEstVel + frontRightWheelEstVel - 
+                           rearLeftWheelEstVel + rearRightWheelEstVel) * 
                            (this->dataPtr->wheelRadius / 4) /
                            (this->dataPtr->wheelFrontRearSeparation/2 + 
                             this->dataPtr->wheelRightLeftSeparation/2);

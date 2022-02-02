@@ -75,14 +75,6 @@ void OmniDrive::Configure(const Entity &_entity,
   this->dataPtr->wheelRadius = _sdf->Get<double>("wheel_radius",
       this->dataPtr->wheelRadius).first;
 
-  // Calculates angle and distance between center of robot and center of the wheels, relative to robot X-axis.
-  this->dataPtr->alphaFrontLeftWheel  = atan2(this->dataPtr->wheelRightLeftSeparation, this->dataPtr->wheelFrontRearSeparation);
-  this->dataPtr->alphaFrontRightWheel = -this->dataPtr->alphaFrontLeftWheel;
-  this->dataPtr->alphaRearLeftWheel   = M_PI/2 + this->dataPtr->alphaFrontLeftWheel;
-  this->dataPtr->alphaRearRightWheel  = -this->dataPtr->alphaRearLeftWheel;
-  
-  this->dataPtr->wheelCenterSeparation = sqrt( pow(this->dataPtr->wheelRightLeftSeparation, 2)/4 + pow(this->dataPtr->wheelFrontRearSeparation, 2)/4 );
-
   // Instantiate the speed limiters.
   this->dataPtr->limiterLin = std::make_unique<ignition::math::SpeedLimiter>();
   this->dataPtr->limiterAng = std::make_unique<ignition::math::SpeedLimiter>();
@@ -149,10 +141,17 @@ void OmniDrive::Configure(const Entity &_entity,
       std::chrono::duration_cast<std::chrono::steady_clock::duration>(odomPer);
   }
 
-  // Setup odometry.
+  // Setup odometry and kinematics matrix used for wheel joint speeds calculation.
   this->dataPtr->odom.SetWheelParams(this->dataPtr->wheelRightLeftSeparation,
                                      this->dataPtr->wheelFrontRearSeparation,
                                      this->dataPtr->wheelRadius);
+
+  this->dataPtr->kinematicsMatrix.resize(4, 3);
+  this->dataPtr->kinematicsMatrix << 1, -1, -(this->dataPtr->wheelRightLeftSeparation/2 + this->dataPtr->wheelFrontRearSeparation/2),
+                                     1,  1,  (this->dataPtr->wheelRightLeftSeparation/2 + this->dataPtr->wheelFrontRearSeparation/2),
+                                     1,  1, -(this->dataPtr->wheelRightLeftSeparation/2 + this->dataPtr->wheelFrontRearSeparation/2),
+                                     1, -1,  (this->dataPtr->wheelRightLeftSeparation/2 + this->dataPtr->wheelFrontRearSeparation/2);
+  this->dataPtr->kinematicsMatrix = (1/this->dataPtr->wheelRadius) * this->dataPtr->kinematicsMatrix;
 
   // Subscribe to commands
   std::vector<std::string> topics;
@@ -529,10 +528,15 @@ void OmniDrivePrivate::UpdateVelocity(const ignition::gazebo::UpdateInfo &_info,
   this->last0Cmd.ang_z = this->targetAngVelZ;
 
   // Convert the target velocities to joint velocities.
-  this->frontLeftJointSpeed  = (1/this->wheelRadius) * (this->targetLinVelX - this->targetLinVelY + this->wheelCenterSeparation*( sin( 3*M_PI_4 - this->alphaFrontLeftWheel ) / sin(-M_PI_4) )*this->targetAngVelZ);
-  this->frontRightJointSpeed = (1/this->wheelRadius) * (this->targetLinVelX + this->targetLinVelY + this->wheelCenterSeparation*( sin(-3*M_PI_4 - this->alphaFrontRightWheel) / sin( M_PI_4) )*this->targetAngVelZ);
-  this->rearLeftJointSpeed   = (1/this->wheelRadius) * (this->targetLinVelX + this->targetLinVelY + this->wheelCenterSeparation*( sin( M_PI_4   - this->alphaRearLeftWheel  ) / sin( M_PI_4) )*this->targetAngVelZ);
-  this->rearRightJointSpeed  = (1/this->wheelRadius) * (this->targetLinVelX - this->targetLinVelY + this->wheelCenterSeparation*( sin(-M_PI_4   - this->alphaRearRightWheel ) / sin(-M_PI_4) )*this->targetAngVelZ);
+  Eigen::VectorXd velVector(3);
+  velVector << this->targetLinVelX, this->targetLinVelY, this->targetAngVelZ;
+
+  Eigen::VectorXd wheelJointSpeeds = this->kinematicsMatrix * velVector;
+
+  this->frontLeftJointSpeed  = wheelJointSpeeds(0);
+  this->frontRightJointSpeed = wheelJointSpeeds(1);
+  this->rearLeftJointSpeed   = wheelJointSpeeds(2);
+  this->rearRightJointSpeed  = wheelJointSpeeds(3);
 
 }
 
