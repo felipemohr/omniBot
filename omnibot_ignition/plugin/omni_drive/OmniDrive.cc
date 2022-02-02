@@ -452,7 +452,8 @@ void OmniDrivePrivate::UpdateOdometry(const ignition::gazebo::UpdateInfo &_info,
   math::Quaterniond orientation(0, 0, *this->odom.Heading());
   msgs::Set(msg.mutable_pose()->mutable_orientation(), orientation);
 
-  msg.mutable_twist()->mutable_linear()->set_x(this->odom.LinearVelocity());
+  msg.mutable_twist()->mutable_linear()->set_x(this->odom.LinearVelocityX());
+  msg.mutable_twist()->mutable_linear()->set_y(this->odom.LinearVelocityY());
   msg.mutable_twist()->mutable_angular()->set_z(*this->odom.AngularVelocity());
 
   // Set the time stamp in the header

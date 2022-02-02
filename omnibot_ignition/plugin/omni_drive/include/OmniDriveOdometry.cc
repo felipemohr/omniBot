@@ -11,15 +11,17 @@ class ignition::math::OmniDriveOdometryPrivate
 {
   /// \brief Integrates the velocities (linear and angular) using 2nd order
   /// Runge-Kutta.
-  /// \param[in] _linear Linear velocity.
+  /// \param[in] _linear_x Linear velocity x.
+  /// \param[in] _linear_y Linear velocity y.
   /// \param[in] _angular Angular velocity.
-  public: void IntegrateRungeKutta2(double _linear, double _angular);
+  public: void IntegrateRungeKutta2(double _linear_x, double _linear_y, double _angular);
 
   /// \brief Integrates the velocities (linear and angular) using exact
   /// method.
-  /// \param[in] _linear Linear velocity.
+  /// \param[in] _linear_x Linear velocity. x
+  /// \param[in] _linear_y Linear velocity y.
   /// \param[in] _angular Angular velocity.
-  public: void IntegrateExact(double _linear, double _angular);
+  public: void IntegrateExact(double _linear_x, double _linear_y, double _angular);
 
   /// \brief Current timestamp.
   public: clock::time_point lastUpdateTime;
@@ -33,8 +35,11 @@ class ignition::math::OmniDriveOdometryPrivate
   /// \brief Current heading in radians.
   public: Angle heading;
 
-  /// \brief Current velocity in meter/second.
-  public: double linearVel{0.0};
+  /// \brief Current velocity x in meter/second.
+  public: double linearVelX{0.0};
+
+  /// \brief Current velocity y in meter/second.
+  public: double linearVelY{0.0};
 
   /// \brief Current angular velocity in radians/second.
   public: Angle angularVel;
@@ -48,14 +53,23 @@ class ignition::math::OmniDriveOdometryPrivate
   /// \brief Distance between front and rear wheels in meters.
   public: double wheelFrontRearSeparation{1.0};
 
-  /// \brief Previous left wheel position/state in radians.
-  public: double leftWheelOldPos{0.0};
+  /// \brief Previous front left wheel position/state in radians.
+  public: double frontLeftWheelOldPos{0.0};
 
-  /// \brief Previous right wheel position/state in radians.
-  public: double rightWheelOldPos{0.0};
+  /// \brief Previous rear left wheel position/state in radians.
+  public: double rearLeftWheelOldPos{0.0};
 
-  /// \brief Rolling mean accumulators for the linear velocity
-  public: RollingMean linearMean;
+  /// \brief Previous front right wheel position/state in radians.
+  public: double frontRightWheelOldPos{0.0};
+
+  /// \brief Previous rear right wheel position/state in radians.
+  public: double rearRightWheelOldPos{0.0};
+
+  /// \brief Rolling mean accumulators for the linear x velocity
+  public: RollingMean linearXMean;
+
+  /// \brief Rolling mean accumulators for the linear y velocity
+  public: RollingMean linearYMean;
 
   /// \brief Rolling mean accumulators for the angular velocity
   public: RollingMean angularMean;
@@ -68,7 +82,8 @@ class ignition::math::OmniDriveOdometryPrivate
 OmniDriveOdometry::OmniDriveOdometry(size_t _windowSize)
   : dataPtr(new OmniDriveOdometryPrivate)
 {
-  this->dataPtr->linearMean.SetWindowSize(_windowSize);
+  this->dataPtr->linearXMean.SetWindowSize(_windowSize);
+  this->dataPtr->linearYMean.SetWindowSize(_windowSize);
   this->dataPtr->angularMean.SetWindowSize(_windowSize);
 }
 
@@ -81,15 +96,19 @@ OmniDriveOdometry::~OmniDriveOdometry()
 void OmniDriveOdometry::Init(const clock::time_point &_time)
 {
   // Reset accumulators and timestamp.
-  this->dataPtr->linearMean.Clear();
+  this->dataPtr->linearXMean.Clear();
+  this->dataPtr->linearYMean.Clear();
   this->dataPtr->angularMean.Clear();
   this->dataPtr->x = 0.0;
   this->dataPtr->y = 0.0;
   this->dataPtr->heading = 0.0;
-  this->dataPtr->linearVel = 0.0;
+  this->dataPtr->linearVelX = 0.0;
+  this->dataPtr->linearVelY = 0.0;
   this->dataPtr->angularVel = 0.0;
-  this->dataPtr->leftWheelOldPos = 0.0;
-  this->dataPtr->rightWheelOldPos = 0.0;
+  this->dataPtr->frontLeftWheelOldPos = 0.0;
+  this->dataPtr->rearLeftWheelOldPos = 0.0;
+  this->dataPtr->frontRightWheelOldPos = 0.0;
+  this->dataPtr->rearRightWheelOldPos = 0.0;
 
   this->dataPtr->lastUpdateTime = _time;
   this->dataPtr->initialized = true;
@@ -111,26 +130,44 @@ bool OmniDriveOdometry::Update(const Angle &_frontLeftPos, const Angle &_rearLef
     _time - this->dataPtr->lastUpdateTime;
 
   // Get current wheel joint positions:
-  const double leftWheelCurPos = *_frontLeftPos * this->dataPtr->wheelRadius;
-  const double rightWheelCurPos = *_frontRightPos * this->dataPtr->wheelRadius;
+  const double frontLeftWheelCurPos  = *_frontLeftPos * this->dataPtr->wheelRadius;
+  const double rearLeftWheelCurPos   = *_rearLeftPos * this->dataPtr->wheelRadius;
+  const double frontRightWheelCurPos = *_frontRightPos * this->dataPtr->wheelRadius;
+  const double rearRightWheelCurPos  = *_rearRightPos * this->dataPtr->wheelRadius;
 
   // Estimate velocity of wheels using old and current position:
-  const double leftWheelEstVel = leftWheelCurPos -
-                                 this->dataPtr->leftWheelOldPos;
+  const double frontLeftWheelEstVel = frontLeftWheelCurPos -
+                                 this->dataPtr->frontLeftWheelOldPos;
 
-  const double rightWheelEstVel = rightWheelCurPos -
-                                  this->dataPtr->rightWheelOldPos;
+  const double rearLeftWheelEstVel = rearLeftWheelCurPos -
+                                 this->dataPtr->rearLeftWheelOldPos;
+
+  const double frontRightWheelEstVel = frontRightWheelCurPos -
+                                  this->dataPtr->frontRightWheelOldPos;
+
+  const double rearRightWheelEstVel = rearRightWheelCurPos -
+                                  this->dataPtr->rearRightWheelOldPos;
 
   // Update old position with current
-  this->dataPtr->leftWheelOldPos = leftWheelCurPos;
-  this->dataPtr->rightWheelOldPos = rightWheelCurPos;
+  this->dataPtr->frontLeftWheelOldPos  = frontLeftWheelCurPos;
+  this->dataPtr->rearLeftWheelOldPos   = rearLeftWheelCurPos;
+  this->dataPtr->frontRightWheelOldPos = frontRightWheelCurPos;
+  this->dataPtr->rearRightWheelOldPos  = rearRightWheelCurPos;
 
   // Compute linear and angular diff
-  const double linear = (rightWheelEstVel + leftWheelEstVel) * 0.5;
-  const double angular = (rightWheelEstVel - leftWheelEstVel) /
-    this->dataPtr->wheelFrontRearSeparation;
+  const double linear_x = (frontLeftWheelEstVel + rearLeftWheelEstVel + 
+                           frontRightWheelEstVel + rearRightWheelEstVel) * 
+                           (this->dataPtr->wheelRadius / 4);
+  const double linear_y = (-frontLeftWheelEstVel + rearLeftWheelEstVel + 
+                           frontRightWheelEstVel - rearRightWheelEstVel) * 
+                           (this->dataPtr->wheelRadius / 4);
+  const double angular  = (-frontLeftWheelEstVel + rearLeftWheelEstVel - 
+                           frontRightWheelEstVel + rearRightWheelEstVel) * 
+                           (this->dataPtr->wheelRadius / 4) /
+                           (this->dataPtr->wheelFrontRearSeparation/2 + 
+                            this->dataPtr->wheelRightLeftSeparation/2);
 
-  this->dataPtr->IntegrateExact(linear, angular);
+  this->dataPtr->IntegrateExact(linear_x, linear_y, angular);
 
   // We cannot estimate the speed if the time interval is zero (or near
   // zero).
@@ -140,10 +177,12 @@ bool OmniDriveOdometry::Update(const Angle &_frontLeftPos, const Angle &_rearLef
   this->dataPtr->lastUpdateTime = _time;
 
   // Estimate speeds using a rolling mean to filter them out:
-  this->dataPtr->linearMean.Push(linear / dt.count());
-  this->dataPtr->angularMean.Push(angular / dt.count());
+  this->dataPtr->linearXMean.Push(linear_x / dt.count());
+  this->dataPtr->linearYMean.Push(linear_y / dt.count());
+  this->dataPtr->angularMean.Push(angular  / dt.count());
 
-  this->dataPtr->linearVel = this->dataPtr->linearMean.Mean();
+  this->dataPtr->linearVelX = this->dataPtr->linearXMean.Mean();
+  this->dataPtr->linearVelY = this->dataPtr->linearYMean.Mean();
   this->dataPtr->angularVel = this->dataPtr->angularMean.Mean();
 
   return true;
@@ -162,7 +201,8 @@ void OmniDriveOdometry::SetWheelParams(double _wheelRightLeftSeparation,
 //////////////////////////////////////////////////
 void OmniDriveOdometry::SetVelocityRollingWindowSize(size_t _size)
 {
-  this->dataPtr->linearMean.SetWindowSize(_size);
+  this->dataPtr->linearXMean.SetWindowSize(_size);
+  this->dataPtr->linearYMean.SetWindowSize(_size);
   this->dataPtr->angularMean.SetWindowSize(_size);
 }
 
@@ -185,9 +225,15 @@ double OmniDriveOdometry::Y() const
 }
 
 //////////////////////////////////////////////////
-double OmniDriveOdometry::LinearVelocity() const
+double OmniDriveOdometry::LinearVelocityX() const
 {
-  return this->dataPtr->linearVel;
+  return this->dataPtr->linearVelX;
+}
+
+//////////////////////////////////////////////////
+double OmniDriveOdometry::LinearVelocityY() const
+{
+  return this->dataPtr->linearVelY;
 }
 
 //////////////////////////////////////////////////
@@ -198,28 +244,28 @@ const Angle &OmniDriveOdometry::AngularVelocity() const
 
 //////////////////////////////////////////////////
 void OmniDriveOdometryPrivate::IntegrateRungeKutta2(
-    double _linear, double _angular)
+    double _linear_x, double _linear_y, double _angular)
 {
   const double direction = *this->heading + _angular * 0.5;
 
   // Runge-Kutta 2nd order integration:
-  this->x += _linear * std::cos(direction);
-  this->y += _linear * std::sin(direction);
+  this->x += _linear_x * std::cos(direction) + _linear_y * std::sin(direction);
+  this->y += _linear_x * std::sin(direction) + _linear_y * std::cos(direction);
   this->heading += _angular;
 }
 
 //////////////////////////////////////////////////
-void OmniDriveOdometryPrivate::IntegrateExact(double _linear, double _angular)
+void OmniDriveOdometryPrivate::IntegrateExact(double _linear_x, double _linear_y, double _angular)
 {
   if (std::fabs(_angular) < 1e-6)
   {
-    this->IntegrateRungeKutta2(_linear, _angular);
+    this->IntegrateRungeKutta2(_linear_x, _linear_y, _angular);
   }
   else
   {
     // Exact integration (should solve problems when angular is zero):
     const double headingOld = *this->heading;
-    const double ratio = _linear / _angular;
+    const double ratio = sqrt(pow(_linear_x, 2) + pow(_linear_y, 2)) / _angular;
     this->heading += _angular;
     this->x += ratio * (std::sin(*this->heading) - std::sin(headingOld));
     this->y += -ratio * (std::cos(*this->heading) - std::cos(headingOld));

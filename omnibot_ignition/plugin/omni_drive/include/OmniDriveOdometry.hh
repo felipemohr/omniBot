@@ -102,9 +102,13 @@ namespace ignition
       /// \return The Y position in meters.
       public: double Y() const;
 
-      /// \brief Get the linear velocity.
+      /// \brief Get the linear velocity x.
       /// \return The linear velocity in meter/second.
-      public: double LinearVelocity() const;
+      public: double LinearVelocityX() const;
+
+      /// \brief Get the linear velocity y.
+      /// \return The linear velocity in meter/second.
+      public: double LinearVelocityY() const;
 
       /// \brief Get the angular velocity.
       /// \return The angular velocity in radian/second.
