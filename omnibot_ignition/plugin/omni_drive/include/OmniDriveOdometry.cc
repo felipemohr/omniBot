@@ -9,73 +9,78 @@ using namespace math;
 
 class ignition::math::OmniDriveOdometryPrivate
 {
-  /// \brief Integrates the velocities (linear and angular) using 2nd order
-  /// Runge-Kutta.
-  /// \param[in] _linear_x Linear velocity x.
-  /// \param[in] _linear_y Linear velocity y.
-  /// \param[in] _angular Angular velocity.
-  public: void IntegrateRungeKutta2(double _linear_x, double _linear_y, double _angular);
+  public:
+    /** @brief Integrates the velocities (linear and angular) using 2nd order Runge-Kutta
+     * \param _linear_x Linear velocity x.
+     * \param _linear_y Linear velocity y.
+     * \param _angular Angular velocity.
+     */
+    void IntegrateRungeKutta2(double _linear_x, double _linear_y, double _angular);
 
-  /// \brief Integrates the velocities (linear and angular) using exact
-  /// method.
-  /// \param[in] _linear_x Linear velocity. x
-  /// \param[in] _linear_y Linear velocity y.
-  /// \param[in] _angular Angular velocity.
-  public: void IntegrateExact(double _linear_x, double _linear_y, double _angular);
+    /** 
+     * @brief Integrates the velocities (linear and angular) using exact method
+     * 
+     * @param _linear_x Linear velocity x.
+     * @param _linear_y Linear velocity y.
+     * @param _angular Angular velocity.
+     */
 
-  /// \brief Current timestamp.
-  public: clock::time_point lastUpdateTime;
+    
+    void IntegrateExact(double _linear_x, double _linear_y, double _angular);
 
-  /// \brief Current x position in meters.
-  public: double x{0.0};
+    /** @brief Current timestamp. **/
+    clock::time_point lastUpdateTime;
 
-  /// \brief Current y position in meters.
-  public: double y{0.0};
+    /** @brief Current x position in meters. **/
+    double x{0.0};
 
-  /// \brief Current heading in radians.
-  public: Angle heading;
+    /** @brief Current y position in meters. **/
+    double y{0.0};
 
-  /// \brief Current velocity x in meter/second.
-  public: double linearVelX{0.0};
+    /** @brief Current heading in radians. **/
+    Angle heading;
 
-  /// \brief Current velocity y in meter/second.
-  public: double linearVelY{0.0};
+    /** @brief Current velocity x in meter/second. **/
+    double linearVelX{0.0};
 
-  /// \brief Current angular velocity in radians/second.
-  public: Angle angularVel;
+    /** @brief Current velocity y in meter/second. **/
+    double linearVelY{0.0};
 
-  /// \brief Wheel radius in meters.
-  public: double wheelRadius{0.2};
-      
-  /// \brief Distance between right and left wheels in meters.
-  public: double wheelRightLeftSeparation{1.0};
+    /** @brief Current angular velocity in radians/second. **/
+    Angle angularVel;
 
-  /// \brief Distance between front and rear wheels in meters.
-  public: double wheelFrontRearSeparation{1.0};
+    /** @brief Wheel radius in meters. **/
+    double wheelRadius{0.2};
+        
+    /** @brief Distance between right and left wheels in meters. **/
+    double wheelRightLeftSeparation{1.0};
 
-  /// \brief Previous front left wheel position/state in radians.
-  public: double frontLeftWheelOldPos{0.0};
+    /** @brief Distance between front and rear wheels in meters. **/
+    double wheelFrontRearSeparation{1.0};
 
-  /// \brief Previous rear left wheel position/state in radians.
-  public: double rearLeftWheelOldPos{0.0};
+    /** @brief Previous front left wheel position/state in radians. **/
+    double frontLeftWheelOldPos{0.0};
 
-  /// \brief Previous front right wheel position/state in radians.
-  public: double frontRightWheelOldPos{0.0};
+    /** @brief Previous rear left wheel position/state in radians. **/
+    double rearLeftWheelOldPos{0.0};
 
-  /// \brief Previous rear right wheel position/state in radians.
-  public: double rearRightWheelOldPos{0.0};
+    /** @brief Previous front right wheel position/state in radians. **/
+    double frontRightWheelOldPos{0.0};
 
-  /// \brief Rolling mean accumulators for the linear x velocity
-  public: RollingMean linearXMean;
+    /** @brief Previous rear right wheel position/state in radians. **/
+    double rearRightWheelOldPos{0.0};
 
-  /// \brief Rolling mean accumulators for the linear y velocity
-  public: RollingMean linearYMean;
+    /** @brief Rolling mean accumulators for the linear x velocity **/
+    RollingMean linearXMean;
 
-  /// \brief Rolling mean accumulators for the angular velocity
-  public: RollingMean angularMean;
+    /** @brief Rolling mean accumulators for the linear y velocity **/
+    RollingMean linearYMean;
 
-  /// \brief Initialized flag.
-  public: bool initialized{false};
+    /** @brief Rolling mean accumulators for the angular velocity **/
+    RollingMean angularMean;
+
+    /** @brief Initialized flag. **/
+    bool initialized{false};
 };
 
 //////////////////////////////////////////////////
