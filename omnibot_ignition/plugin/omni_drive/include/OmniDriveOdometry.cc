@@ -5,8 +5,6 @@
 using namespace ignition;
 using namespace math;
 
-// The implementation was borrowed from: https://github.com/ros-controls/ros_controllers/blob/melodic-devel/diff_drive_controller/src/odometry.cpp
-
 class ignition::math::OmniDriveOdometryPrivate
 {
   public:
@@ -23,9 +21,7 @@ class ignition::math::OmniDriveOdometryPrivate
      * @param _linear_x Linear velocity x.
      * @param _linear_y Linear velocity y.
      * @param _angular Angular velocity.
-     */
-
-    
+     */    
     void IntegrateExact(double _linear_x, double _linear_y, double _angular);
 
     /** @brief Current timestamp. **/
