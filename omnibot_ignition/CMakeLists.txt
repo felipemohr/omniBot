@@ -25,7 +25,7 @@ find_package(tf2_ros REQUIRED)
 # find_package(<dependency> REQUIRED)
 
 install(
-  DIRECTORY worlds launch
+  DIRECTORY worlds launch models
   DESTINATION share/${PROJECT_NAME}
 )
 

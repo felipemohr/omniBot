@@ -61,5 +61,11 @@
       </link>
     </model>
 
+    <include>
+      <name>omni_walls</name>
+      <pose>0 0 0 0 0 0</pose>
+      <uri>/home/senai/omnibot_ws/src/omniBot/omnibot_ignition/models/omni_walls</uri>
+    </include>
+
   </world>
 </sdf>
