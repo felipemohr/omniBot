@@ -64,13 +64,13 @@
     <include>
       <name>walls</name>
       <pose>0 0 0 0 0 0</pose>
-      <uri>/home/senai/omnibot_ws/src/omniBot/omnibot_ignition/models/walls</uri>
+      <uri>model://walls</uri>
     </include>
 
     <include>
       <name>star</name>
       <pose>0.4 0 0.08 0 0 1.57</pose>
-      <uri>/home/senai/omnibot_ws/src/omniBot/omnibot_ignition/models/star</uri>
+      <uri>model://star</uri>
     </include>
 
   </world>
