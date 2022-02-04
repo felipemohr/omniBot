@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="omnibot_wheel">
+
+  <xacro:macro name="omnibot_wheel" params="prefix *joint_pose">
+    <link name="${prefix}_wheel_link">
+      <visual>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <geometry>
+          <!-- <cylinder radius="${wheel_radius}" length="${wheel_width}"/> -->
+          <!-- <mesh filename="package://omnibot_description/meshes/mecanum_wheel_${prefix}.dae"/> -->
+          <mesh filename="$(find omnibot_description)/meshes/mecanum_wheel_${prefix}.dae"/>
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0.0 0.0 0.0" rpy="${-M_PI/2} 0.0 0.0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <mass value="0.120"/>
+        <inertia ixx="6.278e-5" ixy="2.396e-10" ixz="4.709e-11" iyy="9.349e-5" iyz="-1.916e-10" izz="6.278e-5"/>
+      </inertial>
+    </link>
+
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <xacro:insert_block name="joint_pose"/>
+      <parent link="base_link"/>
+      <child link="${prefix}_wheel_link"/>
+      <axis xyz="0 1 0" rpy="0.0 0.0 0.0"/>
+    </joint>
+
+    <gazebo reference="${prefix}_wheel_link">
+      <mu1 value="0.0"/>
+      <mu2 value="0.0"/>
+    </gazebo>
+    
+  </xacro:macro>
+
+</robot>

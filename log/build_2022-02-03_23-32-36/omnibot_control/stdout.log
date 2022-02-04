@@ -1,0 +1,90 @@
+-- The C compiler identification is GNU 9.3.0
+-- The CXX compiler identification is GNU 9.3.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)
+-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Found rclcpp: 2.4.0 (/opt/ros/foxy/share/rclcpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Found rosidl_adapter: 1.2.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  
+-- Found FastRTPS: /opt/ros/foxy/include  
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- Found geometry_msgs: 2.0.4 (/opt/ros/foxy/share/geometry_msgs/cmake)
+-- Found sensor_msgs: 2.0.4 (/opt/ros/foxy/share/sensor_msgs/cmake)
+-- Found keyboard_interface: 0.0.1 (/home/senai/omnibot_ws/src/omniBot/install/keyboard_interface/share/keyboard_interface/cmake)
+-- Found ament_lint_auto: 0.9.6 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+-- Added test 'copyright' to check source files copyright and LICENSE
+-- Added test 'cppcheck' to perform static code analysis on C / C++ code
+-- Configured cppcheck include dirs: /home/senai/omnibot_ws/src/omniBot/omnibot_control/include
+-- Configured cppcheck exclude dirs and/or files: 
+-- Added test 'cpplint' to check C / C++ code against the Google style
+-- Configured cpplint exclude dirs and/or files: 
+-- Added test 'flake8' to check Python code syntax and style conventions
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+-- Added test 'uncrustify' to check C / C++ code style
+-- Configured uncrustify additional arguments: 
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/senai/omnibot_ws/src/omniBot/build/omnibot_control
+[35m[1mScanning dependencies of target joy_teleop[0m
+[35m[1mScanning dependencies of target keyboard_teleop[0m
+[35m[1mScanning dependencies of target test_vel_control[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/test_vel_control.dir/src/test_vel_control.cpp.o[0m
+[ 33%] [32mBuilding CXX object CMakeFiles/joy_teleop.dir/src/JoyTeleop.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/keyboard_teleop.dir/src/KeyboardTeleop.cpp.o[0m
+[ 66%] [32m[1mLinking CXX executable test_vel_control[0m
+[ 66%] Built target test_vel_control
+[ 83%] [32m[1mLinking CXX executable joy_teleop[0m
+[ 83%] Built target joy_teleop
+[100%] [32m[1mLinking CXX executable keyboard_teleop[0m
+[100%] Built target keyboard_teleop
+-- Install configuration: ""
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/launch
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/launch/joy_teleop.launch.py
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/launch/keyboard_teleop.launch.py
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/lib/omnibot_control/test_vel_control
+-- Set runtime path of "/home/senai/omnibot_ws/src/omniBot/install/omnibot_control/lib/omnibot_control/test_vel_control" to ""
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/lib/omnibot_control/joy_teleop
+-- Set runtime path of "/home/senai/omnibot_ws/src/omniBot/install/omnibot_control/lib/omnibot_control/joy_teleop" to ""
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/lib/omnibot_control/keyboard_teleop
+-- Set runtime path of "/home/senai/omnibot_ws/src/omniBot/install/omnibot_control/lib/omnibot_control/keyboard_teleop" to ""
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/ament_index/resource_index/package_run_dependencies/omnibot_control
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/ament_index/resource_index/parent_prefix_path/omnibot_control
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/environment/ament_prefix_path.sh
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/environment/ament_prefix_path.dsv
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/environment/path.sh
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/environment/path.dsv
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/local_setup.bash
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/local_setup.sh
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/local_setup.zsh
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/local_setup.dsv
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/package.dsv
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/ament_index/resource_index/packages/omnibot_control
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/cmake/omnibot_controlConfig.cmake
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/cmake/omnibot_controlConfig-version.cmake
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/package.xml

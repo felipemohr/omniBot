@@ -1,0 +1,25 @@
+[100%] Built target keyboard_teleop
+[100%] Built target test_vel_control
+[100%] Built target joy_teleop
+-- Install configuration: ""
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/launch
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/launch/joy_teleop.launch.py
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/launch/keyboard_teleop.launch.py
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/lib/omnibot_control/test_vel_control
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/lib/omnibot_control/joy_teleop
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/lib/omnibot_control/keyboard_teleop
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/ament_index/resource_index/package_run_dependencies/omnibot_control
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/ament_index/resource_index/parent_prefix_path/omnibot_control
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/environment/ament_prefix_path.sh
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/environment/path.sh
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/environment/path.dsv
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/local_setup.bash
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/local_setup.sh
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/local_setup.zsh
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/local_setup.dsv
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/package.dsv
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/ament_index/resource_index/packages/omnibot_control
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/cmake/omnibot_controlConfig.cmake
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/cmake/omnibot_controlConfig-version.cmake
+-- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_control/share/omnibot_control/package.xml

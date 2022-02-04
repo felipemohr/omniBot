@@ -1,0 +1,68 @@
+-- The C compiler identification is GNU 9.3.0
+-- The CXX compiler identification is GNU 9.3.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)
+-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+-- Using PYTHON_EXECUTABLE: /usr/bin/python3
+-- Found urdf: 2.4.0 (/opt/ros/foxy/share/urdf/cmake)
+-- Found ament_lint_auto: 0.9.6 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+-- Added test 'copyright' to check source files copyright and LICENSE
+-- Added test 'flake8' to check Python code syntax and style conventions
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/senai/omnibot_ws/src/omniBot/build/omnibot_description
+-- Install configuration: ""
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/sensors.urdf.xacro
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/omnibot.urdf.xacro
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/wheel.urdf.xacro
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/base.urdf.xacro
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/launch
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/launch/start_robot.launch.py
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/launch/display.launch.py
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/rviz
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/rviz/urdf_config.rviz
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/rviz/config.rviz
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_right.stl
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/raspicam.dae
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_left.stl
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_left.stl
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_right.dae
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/lidar.stl
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_right.dae
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_right.stl
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_left.dae
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_left.dae
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/lidar.dae
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/base_link.dae
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/base_link.stl
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/ament_index/resource_index/package_run_dependencies/omnibot_description
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/ament_index/resource_index/parent_prefix_path/omnibot_description
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/ament_prefix_path.sh
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/ament_prefix_path.dsv
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/path.sh
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/path.dsv
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.bash
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.sh
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.zsh
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.dsv
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/package.dsv
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/ament_index/resource_index/packages/omnibot_description
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/cmake/omnibot_descriptionConfig.cmake
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/cmake/omnibot_descriptionConfig-version.cmake
+-- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/package.xml

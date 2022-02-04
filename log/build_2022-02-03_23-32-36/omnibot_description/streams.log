@@ -1,0 +1,74 @@
+[0.026s] Invoking command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake /home/senai/omnibot_ws/src/omniBot/omnibot_description -DCMAKE_INSTALL_PREFIX=/home/senai/omnibot_ws/src/omniBot/install/omnibot_description
+[0.074s] -- The C compiler identification is GNU 9.3.0
+[0.125s] -- The CXX compiler identification is GNU 9.3.0
+[0.129s] -- Check for working C compiler: /usr/bin/cc
+[0.194s] -- Check for working C compiler: /usr/bin/cc -- works
+[0.195s] -- Detecting C compiler ABI info
+[0.261s] -- Detecting C compiler ABI info - done
+[0.272s] -- Detecting C compile features
+[0.272s] -- Detecting C compile features - done
+[0.276s] -- Check for working CXX compiler: /usr/bin/c++
+[0.360s] -- Check for working CXX compiler: /usr/bin/c++ -- works
+[0.361s] -- Detecting CXX compiler ABI info
+[0.438s] -- Detecting CXX compiler ABI info - done
+[0.450s] -- Detecting CXX compile features
+[0.450s] -- Detecting CXX compile features - done
+[0.453s] -- Found ament_cmake: 0.9.9 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.476s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") 
+[0.476s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.703s] -- Found urdf: 2.4.0 (/opt/ros/foxy/share/urdf/cmake)
+[0.743s] -- Found ament_lint_auto: 0.9.6 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[0.814s] -- Added test 'copyright' to check source files copyright and LICENSE
+[0.817s] -- Added test 'flake8' to check Python code syntax and style conventions
+[0.818s] -- Added test 'lint_cmake' to check CMake code style
+[0.819s] -- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+[0.820s] -- Added test 'xmllint' to check XML markup files
+[0.822s] -- Configuring done
+[0.824s] -- Generating done
+[0.825s] -- Build files have been written to: /home/senai/omnibot_ws/src/omniBot/build/omnibot_description
+[0.831s] Invoked command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake /home/senai/omnibot_ws/src/omniBot/omnibot_description -DCMAKE_INSTALL_PREFIX=/home/senai/omnibot_ws/src/omniBot/install/omnibot_description
+[0.833s] Invoking command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/senai/omnibot_ws/src/omniBot/build/omnibot_description -- -j12 -l12
+[0.872s] Invoked command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/senai/omnibot_ws/src/omniBot/build/omnibot_description -- -j12 -l12
+[0.906s] Invoking command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/senai/omnibot_ws/src/omniBot/build/omnibot_description
+[0.914s] -- Install configuration: ""
+[0.914s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf
+[0.914s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/sensors.urdf.xacro
+[0.914s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/omnibot.urdf.xacro
+[0.914s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/wheel.urdf.xacro
+[0.914s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/base.urdf.xacro
+[0.915s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/launch
+[0.915s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/launch/start_robot.launch.py
+[0.915s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/launch/display.launch.py
+[0.915s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/rviz
+[0.915s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/rviz/urdf_config.rviz
+[0.915s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/rviz/config.rviz
+[0.915s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes
+[0.915s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_right.stl
+[0.919s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/raspicam.dae
+[0.920s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_left.stl
+[0.924s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_left.stl
+[0.929s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_right.dae
+[0.931s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/lidar.stl
+[0.932s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_right.dae
+[0.935s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_right.stl
+[0.939s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_left.dae
+[0.941s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_left.dae
+[0.943s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/lidar.dae
+[0.943s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/base_link.dae
+[0.943s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/base_link.stl
+[0.944s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/ament_index/resource_index/package_run_dependencies/omnibot_description
+[0.945s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/ament_index/resource_index/parent_prefix_path/omnibot_description
+[0.945s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/ament_prefix_path.sh
+[0.945s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/ament_prefix_path.dsv
+[0.945s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/path.sh
+[0.945s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/path.dsv
+[0.945s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.bash
+[0.945s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.sh
+[0.945s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.zsh
+[0.945s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.dsv
+[0.945s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/package.dsv
+[0.946s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/ament_index/resource_index/packages/omnibot_description
+[0.946s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/cmake/omnibot_descriptionConfig.cmake
+[0.946s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/cmake/omnibot_descriptionConfig-version.cmake
+[0.946s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/package.xml
+[0.948s] Invoked command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/senai/omnibot_ws/src/omniBot/build/omnibot_description

@@ -1,0 +1,4 @@
+Invoking command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/senai/omnibot_ws/src/omniBot/build/omnibot_description -- -j12 -l12
+Invoked command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/senai/omnibot_ws/src/omniBot/build/omnibot_description -- -j12 -l12
+Invoking command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/senai/omnibot_ws/src/omniBot/build/omnibot_description
+Invoked command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/senai/omnibot_ws/src/omniBot/build/omnibot_description

@@ -1,0 +1,45 @@
+[0.029s] Invoking command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/senai/omnibot_ws/src/omniBot/build/omnibot_description -- -j12 -l12
+[0.065s] Invoked command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/senai/omnibot_ws/src/omniBot/build/omnibot_description -- -j12 -l12
+[0.110s] Invoking command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/senai/omnibot_ws/src/omniBot/build/omnibot_description
+[0.121s] -- Install configuration: ""
+[0.121s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/sensors.urdf.xacro
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/omnibot.urdf.xacro
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/wheel.urdf.xacro
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/urdf/base.urdf.xacro
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/launch
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/launch/start_robot.launch.py
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/launch/display.launch.py
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/rviz
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/rviz/urdf_config.rviz
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/rviz/config.rviz
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_right.stl
+[0.122s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/raspicam.dae
+[0.123s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_left.stl
+[0.123s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_left.stl
+[0.123s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_right.dae
+[0.123s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/lidar.stl
+[0.123s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_right.dae
+[0.124s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_right.stl
+[0.124s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_front_left.dae
+[0.124s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/mecanum_wheel_back_left.dae
+[0.126s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/lidar.dae
+[0.126s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/base_link.dae
+[0.126s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/meshes/base_link.stl
+[0.126s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/ament_index/resource_index/package_run_dependencies/omnibot_description
+[0.126s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/ament_index/resource_index/parent_prefix_path/omnibot_description
+[0.126s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/ament_prefix_path.sh
+[0.127s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/ament_prefix_path.dsv
+[0.128s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/path.sh
+[0.128s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/environment/path.dsv
+[0.129s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.bash
+[0.129s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.sh
+[0.129s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.zsh
+[0.129s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/local_setup.dsv
+[0.129s] -- Installing: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/package.dsv
+[0.130s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/ament_index/resource_index/packages/omnibot_description
+[0.130s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/cmake/omnibot_descriptionConfig.cmake
+[0.130s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/cmake/omnibot_descriptionConfig-version.cmake
+[0.130s] -- Up-to-date: /home/senai/omnibot_ws/src/omniBot/install/omnibot_description/share/omnibot_description/package.xml
+[0.131s] Invoked command in '/home/senai/omnibot_ws/src/omniBot/build/omnibot_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/senai/omnibot_ws/src/omniBot/build/omnibot_description

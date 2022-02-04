@@ -1,0 +1,12 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from keyboard_interface/msg/Keys.msg
+// generated code does not contain a copyright notice
+
+
+module keyboard_interface {
+  module msg {
+    struct Keys {
+      sequence<string> pressed_keys;
+    };
+  };
+};
