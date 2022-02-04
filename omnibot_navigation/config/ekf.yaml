@@ -11,9 +11,9 @@ ekf_filter_node:
         world_frame: odom
 
         odom0: odom
-        odom0_config: [true,  true,  true,
+        odom0_config: [false, false, false,
                        false, false, false,
-                       false, false, false,
+                       true,  true,  true,
                        false, false, true,
                        false, false, false]
 
@@ -21,5 +21,5 @@ ekf_filter_node:
         imu0_config: [false, false, false,
                       true,  true,  true,
                       false, false, false,
-                      false, false, false,
+                      true,  true,  true,
                       false, false, false]

@@ -67,6 +67,13 @@ def generate_launch_description():
             arguments=["0", "0", "0", "0", "0", "0", "camera_link", "omnibot/base_link/camera"]
   )
 
+  tf2_imu_transform = Node(
+            package="tf2_ros",
+            executable="static_transform_publisher",
+            output="screen" ,
+            arguments=["0", "0", "0", "0", "0", "0", "imu_link", "omnibot/base_link/imu_sensor"]
+  )
+
   return launch.LaunchDescription([
     launch.actions.DeclareLaunchArgument(name='model', default_value=default_model_path,
                                          description='Absolute path to robot urdf file'),
@@ -78,5 +85,6 @@ def generate_launch_description():
     spawn_robot,
     ign_ros_bridge,
     tf2_lidar_transform,
-    tf2_camera_transform
+    tf2_camera_transform,
+    tf2_imu_transform
   ])

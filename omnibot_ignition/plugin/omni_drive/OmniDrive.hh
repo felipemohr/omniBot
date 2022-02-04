@@ -191,10 +191,10 @@ namespace omni_drive
       /** @brief A muterx to protect the target velocity command **/
       std::mutex mutex;
 
-      /** \brief frame_id from sdf. **/
+      /** @brief frame_id from sdf. **/
       std::string sdfFrameId;
 
-      /** \brief child_frame_id from sdf. **/
+      /** @brief child_frame_id from sdf. **/
       std::string sdfChildFrameId;
 
   };
