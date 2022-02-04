@@ -69,8 +69,14 @@
 
     <include>
       <name>star</name>
-      <pose>0.4 0 0.08 0 0 1.57</pose>
+      <pose>0.4 -0.25 0.08 0 0 1.57</pose>
       <uri>model://star</uri>
+    </include>
+
+    <include>
+      <name>coin</name>
+      <pose>0.4 0.25 0.08 0 0 0</pose>
+      <uri>model://coin</uri>
     </include>
 
   </world>
