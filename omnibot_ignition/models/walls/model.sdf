@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-  <model name="omni_walls">
+  <model name="walls">
     <static>true</static>
     <link name="link">
       <collision name="collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
-            <uri>meshes/omni_walls.dae</uri>
+            <uri>meshes/collision.stl</uri>
           </mesh>
         </geometry>
       </collision>
@@ -15,7 +15,7 @@
         <pose>0 0 0 0 0 0</pose>
         <geometry>
           <mesh>
-            <uri>meshes/omni_walls.dae</uri>
+            <uri>meshes/visual.dae</uri>
           </mesh>
         </geometry>
       </visual>

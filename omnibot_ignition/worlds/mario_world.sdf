@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <sdf version="1.6">
-  <world name="omni_world">
+  <world name="mario_world">
 
     <physics name="1ms" type="ignored">
       <max_step_size>0.001</max_step_size>
@@ -62,9 +62,15 @@
     </model>
 
     <include>
-      <name>omni_walls</name>
+      <name>walls</name>
       <pose>0 0 0 0 0 0</pose>
-      <uri>/home/senai/omnibot_ws/src/omniBot/omnibot_ignition/models/omni_walls</uri>
+      <uri>/home/senai/omnibot_ws/src/omniBot/omnibot_ignition/models/walls</uri>
+    </include>
+
+    <include>
+      <name>star</name>
+      <pose>0.4 0 0.08 0 0 1.57</pose>
+      <uri>/home/senai/omnibot_ws/src/omniBot/omnibot_ignition/models/star</uri>
     </include>
 
   </world>

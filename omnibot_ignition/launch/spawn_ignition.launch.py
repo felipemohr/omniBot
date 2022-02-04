@@ -37,7 +37,7 @@ def generate_launch_description():
     executable='parameter_bridge',
     arguments=[
             '/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock',
-            '/world/omni_world/model/omnibot/joint_state@sensor_msgs/msg/JointState[ignition.msgs.Model',
+            '/world/mario_world/model/omnibot/joint_state@sensor_msgs/msg/JointState[ignition.msgs.Model',
             '/imu@sensor_msgs/msg/Imu@ignition.msgs.IMU',
             '/lidar@sensor_msgs/msg/LaserScan@ignition.msgs.LaserScan',
             '/camera@sensor_msgs/msg/Image@ignition.msgs.Image',
@@ -46,7 +46,7 @@ def generate_launch_description():
             '/model/omnibot/odometry@nav_msgs/msg/Odometry@ignition.msgs.Odometry',
             ],
     remappings=[
-        ('/world/omni_world/model/omnibot/joint_state', 'joint_states'),
+        ('/world/mario_world/model/omnibot/joint_state', 'joint_states'),
         ('/model/omnibot/cmd_vel', 'cmd_vel'),
         ('/model/omnibot/odometry', 'odom')
     ],

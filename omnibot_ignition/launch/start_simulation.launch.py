@@ -11,7 +11,7 @@ def generate_launch_description():
   omnibot_ignition_pkg_share = FindPackageShare('omnibot_ignition').find('omnibot_ignition')
   omnibot_description_pkg_share = FindPackageShare('omnibot_description').find('omnibot_description')
 
-  default_world_path = os.path.join(omnibot_ignition_pkg_share, 'worlds/omni_world.sdf')
+  default_world_path = os.path.join(omnibot_ignition_pkg_share, 'worlds/mario_world.sdf')
   default_model_path = os.path.join(omnibot_description_pkg_share, 'urdf/omnibot.urdf.xacro')
   default_rviz_config_path = os.path.join(omnibot_description_pkg_share, 'rviz/config.rviz')
 
