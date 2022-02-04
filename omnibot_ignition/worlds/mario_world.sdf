@@ -1,28 +1,20 @@
-<?xml version="1.0"?>
-<sdf version="1.6">
-  <world name="mario_world">
-
-    <physics name="1ms" type="ignored">
+<sdf version='1.7'>
+  <world name='mario_world'>
+    <physics name='1ms' type='ignored'>
       <max_step_size>0.001</max_step_size>
-      <real_time_factor>1.0</real_time_factor>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
     </physics>
-    
-    <plugin filename="ignition-gazebo-physics-system"
-            name="ignition::gazebo::systems::Physics"/>
-    <plugin filename="ignition-gazebo-user-commands-system"
-            name="ignition::gazebo::systems::UserCommands"/>
-    <plugin filename="ignition-gazebo-scene-broadcaster-system"
-            name="ignition::gazebo::systems::SceneBroadcaster"/>
-    <plugin filename="ignition-gazebo-imu-system"
-            name="ignition::gazebo::systems::Imu"/>
-    <plugin filename="ignition-gazebo-sensors-system"
-            name="ignition::gazebo::systems::Sensors">
+    <plugin name='ignition::gazebo::systems::Physics' filename='ignition-gazebo-physics-system'/>
+    <plugin name='ignition::gazebo::systems::UserCommands' filename='ignition-gazebo-user-commands-system'/>
+    <plugin name='ignition::gazebo::systems::SceneBroadcaster' filename='ignition-gazebo-scene-broadcaster-system'/>
+    <plugin name='ignition::gazebo::systems::Imu' filename='ignition-gazebo-imu-system'/>
+    <plugin name='ignition::gazebo::systems::Sensors' filename='ignition-gazebo-sensors-system'>
       <render_engine>ogre2</render_engine>
     </plugin>
-
-    <light type="directional" name="sun">
-      <cast_shadows>true</cast_shadows>
-      <pose>0 0 10 0 0 0</pose>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
       <diffuse>0.8 0.8 0.8 1</diffuse>
       <specular>0.2 0.2 0.2 1</specular>
       <attenuation>
@@ -32,20 +24,39 @@
         <quadratic>0.001</quadratic>
       </attenuation>
       <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
     </light>
-
-    <model name="ground_plane">
-      <static>true</static>
-      <link name="link">
-        <collision name="collision">
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
           <geometry>
             <plane>
               <normal>0 0 1</normal>
               <size>100 100</size>
             </plane>
           </geometry>
+          <surface>
+            <friction>
+              <ode/>
+            </friction>
+            <bounce/>
+            <contact/>
+          </surface>
         </collision>
-        <visual name="visual">
+        <visual name='visual'>
           <geometry>
             <plane>
               <normal>0 0 1</normal>
@@ -59,36 +70,37 @@
           </material>
         </visual>
       </link>
+      <pose>0 0 0 0 -0 0</pose>
     </model>
-
+    
     <include>
-      <name>walls</name>
-      <pose>0 0 0 0 0 0</pose>
       <uri>model://walls</uri>
+      <name>walls</name>
+      <pose>0 0 0 0 -0 0</pose>
     </include>
 
     <include>
-      <name>star</name>
-      <pose>0.4 -0.25 0.08 0 0 1.57</pose>
       <uri>model://star</uri>
+      <name>star</name>
+      <pose>-4.25413 -4.31819 0.08 0 0 -0.809054</pose>
     </include>
 
     <include>
-      <name>coin</name>
-      <pose>0.4 0.25 0.08 0 0 0</pose>
       <uri>model://coin</uri>
+      <name>coin</name>
+      <pose>4.47294 -4.52824 0.094491 0 -0 0</pose>
     </include>
 
     <include>
-      <name>plumbing</name>
-      <pose>-0.4 0 0 0 0 0</pose>
       <uri>model://plumbing</uri>
+      <name>plumbing</name>
+      <pose>0.628577 -0.688103 -0.00333 0 -0 0</pose>
     </include>
 
     <include>
-      <name>goomba</name>
-      <pose>-0.4 0.4 0.1 0 0 0</pose>
       <uri>model://goomba</uri>
+      <name>goomba</name>
+      <pose>-4.5421 3.17099 0.1 0 0 -1.19068</pose>
     </include>
 
   </world>
