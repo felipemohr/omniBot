@@ -112,7 +112,7 @@ def generate_launch_description():
     ),
     DeclareLaunchArgument(
         name='params_file',
-        default_value=os.path.join(omnibot_navigation_pkg_share, 'config', 'nav2.yaml'),
+        default_value=os.path.join(omnibot_navigation_pkg_share, 'config/nav2_diff.yaml'),
         description='Full path to the ROS2 parameters file to use'
     ),
     DeclareLaunchArgument(
