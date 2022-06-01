@@ -122,7 +122,7 @@
   </library_effects>
   <library_images>
     <image id="___textures_mario_brick_jpg" name="___textures_mario_brick_jpg">
-      <init_from>/home/senai/omnibot_ws/src/omniBot/omnibot_ignition/models/walls/textures/mario_brick.jpg</init_from>
+      <init_from>../textures/mario_brick.jpg</init_from>
     </image>
   </library_images>
   <library_materials>
