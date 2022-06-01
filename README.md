@@ -1,6 +1,8 @@
 # omniBot
 A omnirectional robot develop using ROS2
 
+![](https://i.ibb.co/jWGmQsK/image.png)
+
 ## Install the packages
 
 - First, create a ROS workspace and clone this repository inside yout /src folder:
@@ -36,7 +38,7 @@ If you want to run a teleoperation with a joystick, run:
 `$ ros2 launch omnibot_control joy_teleop.launch.py`
 
 If you want to run a teleoperation with your keyboard, run:
-`$ ros2 run omnibot_control keyboard_teleop.launch.py`
+`$ ros2 launch omnibot_control keyboard_teleop.launch.py`
 
 ### SLAM
 
